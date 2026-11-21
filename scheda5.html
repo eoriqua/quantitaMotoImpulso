@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quando l’energia meccanica non si conserva: l’auto che frena in discesa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--pot:#B45F06;--hot:#C62828;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;--hot:#FF7B72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;--hot:#FF7B72;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.choices{display:flex;flex-direction:column;gap:.6rem;margin:.8rem 0;align-items:stretch;max-width:30rem}
+.choices button{text-align:left}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Energia · scheda 5 di 5</p>
+<h1>Un’auto scende a velocità costante, frenando di continuo. L’energia cinetica non cambia, quella potenziale diminuisce. Dove va?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>L’auto ha massa 1000 kg e scende di 20 m di dislivello a 36 km/h costanti. Che fine fa l’energia potenziale che perde?</p>
+<div class="choices" role="group" aria-label="La tua previsione">
+<button data-v="a" aria-pressed="false">Aumenta l’energia cinetica dell’auto</button>
+<button data-v="b" aria-pressed="false">Sparisce, perché la velocità resta la stessa</button>
+<button data-v="c" aria-pressed="false">Va nei freni e nell’ambiente, sotto un’altra forma</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Un’auto scende lungo una discesa a velocità costante. Una barra mostra l’energia cinetica che resta costante, l’energia potenziale che diminuisce e l’energia termica che aumenta, con somma costante."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Fai scendere l’auto</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="eck" checked> Mostra energia cinetica</label>
+<label><input type="checkbox" id="epk" checked> Mostra energia potenziale</label>
+<label><input type="checkbox" id="eqk" checked> Mostra energia termica</label>
+</div>
+</div>
+<p class="meta" id="hint">Scegli una previsione per sbloccare la scena. La barra intera è l’energia totale (246 kJ): osserva come si divide.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>L’energia meccanica non si conserva.</b> L’energia cinetica resta 50 kJ, quella potenziale scende di 196 kJ: E<sub>m</sub> = E<sub>c</sub> + U passa da 246 kJ a 50 kJ.</li>
+<li><b>L’energia totale sì.</b> I 196 kJ non sono spariti: compaiono come energia termica. Freni e gomme si scaldano (il disco cambia colore).</li>
+<li><b>Il motivo.</b> Oltre al peso agisce una forza di attrito, che non è conservativa:</li>
+</ul>
+<div class="formula deriv"><p>L’auto scende da i a f, con peso e forza frenante di attrito.</p><ol>
+<li>Teorema dell’energia cinetica: L<sub>tot</sub> = ΔE<sub>c</sub>, con L<sub>tot</sub> = L<sub>peso</sub> + L<sub>att</sub>.</li>
+<li>Il lavoro del peso è L<sub>peso</sub> = −ΔU.</li>
+<li>Sostituisco: −ΔU + L<sub>att</sub> = ΔE<sub>c</sub>, cioè <b>ΔE<sub>m</sub> = ΔE<sub>c</sub> + ΔU = L<sub>att</sub></b>.</li>
+<li>La forza di attrito è opposta allo spostamento: L<sub>att</sub> &lt; 0, quindi E<sub>m</sub> diminuisce.</li>
+<li>Qui ΔE<sub>c</sub> = 0, quindi L<sub>att</sub> = ΔU = −196 kJ. L’energia meccanica persa si ritrova come energia termica: Q = |L<sub>att</sub>| = 196 kJ.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Uno sciatore di massa 70 kg parte da fermo e scende lungo una pista con un dislivello di 40 m. In fondo la sua velocità è 20 m/s. Quanta energia meccanica si è dissipata? Quanto vale il lavoro della forza di attrito?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Quanto vale l’energia meccanica iniziale (zero in fondo)?</summary><div>Fermo: E<sub>c</sub> = 0. Quindi E<sub>m,i</sub> = U = m g h = 70 · 9,8 · 40 = 27 440 J.</div></details>
+<details class="step"><summary>2. Quanto vale l’energia meccanica finale?</summary><div>In fondo U = 0, quindi E<sub>m,f</sub> = E<sub>c</sub> = ½ · 70 · 20² = 14 000 J.</div></details>
+<details class="step"><summary>3. Con quale velocità arriverebbe senza attrito?</summary><div>v = √(2 g h) = √(2 · 9,8 · 40) = √784 = 28 m/s. Arriva a 20 m/s: parte dell’energia non è diventata cinetica.</div></details>
+<details class="step"><summary>4. Quanto vale la variazione di energia meccanica?</summary><div>ΔE<sub>m</sub> = 14 000 − 27 440 = <b>−13 440 J</b>.</div></details>
+<details class="step"><summary>5. Quanto vale il lavoro della forza di attrito, e con quale segno?</summary><div>Dalla relazione ΔE<sub>m</sub> = L<sub>att</sub>: L<sub>att</sub> = <b>−13 440 J</b>. È negativo perché la forza è opposta allo spostamento.</div></details>
+<details class="step"><summary>6. Dove è finita l’energia mancante?</summary><div>In energia termica (sci, neve, aria): Q = 13 440 J ≈ 13,4 kJ, cioè circa metà (49 %) dell’energia iniziale.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Nella scena m = 1000 kg, dislivello 20 m, v = 10 m/s costante: E<sub>c</sub> = 50 kJ, U iniziale = 196 kJ. L’energia termica è quella dissipata, in realtà ripartita tra freni, pneumatici e aria: il colore del disco è solo un indicatore qualitativo. Errori tipici: «l’energia si distrugge», «velocità costante vuol dire che non succede nulla di energetico», dimenticare il segno negativo del lavoro dell’attrito. Ponte con la quantità di moto: negli urti anelastici E<sub>m</sub> non si conserva, ma la quantità di moto sì.</p></details>
+</main>
+<script>
+(()=>{
+const m=1000,g=9.8,V=10,EC=.5*m*V*V/1000,U0=m*g*20/1000,ET=EC+U0,F='13px "Atkinson Hyperlegible",system-ui,sans-serif',FB='bold 12px system-ui,sans-serif';
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),eck=$('eck'),epk=$('epk'),eqk=$('eqk'),res=$('res'),hint=$('hint');
+const btns=[...document.querySelectorAll('.choices button')],reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let choice=null,p=0,running=false;
+const dr=W=>Math.min(120,(W-40)*.3);
+function size(){const W=cv.clientWidth,h=Math.round(30+dr(W)+154),d=devicePixelRatio||1;cv.style.height=h+'px';cv.width=W*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,H=cv.clientHeight,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),D=dr(W),base=30+D;
+ctx.clearRect(0,0,W,H);ctx.font=F;
+const gr=ctx.createLinearGradient(W-60,0,W-10,0);gr.addColorStop(0,c('--blue'));gr.addColorStop(1,c('--hot'));ctx.fillStyle=gr;ctx.fillRect(W-60,8,50,8);
+ctx.fillStyle=c('--muted');ctx.textAlign='right';ctx.fillText('temperatura dei freni',W-66,16);
+ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(20,30);ctx.lineTo(W-20,30);ctx.moveTo(20,base);ctx.lineTo(W-20,base);ctx.stroke();ctx.setLineDash([]);
+ctx.beginPath();ctx.moveTo(20,30);ctx.lineTo(20,base);ctx.stroke();
+ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(20,30);ctx.lineTo(W-20,base);ctx.stroke();
+ctx.textAlign='left';ctx.lineWidth=1;ctx.fillText('dislivello 20 m',26,base-8);
+ctx.textAlign='center';ctx.fillText('v = 36 km/h costante',W/2,base+20);
+const sx=48+p*(W-96),sy=30+(sx-20)/(W-40)*D,a=Math.atan2(D,W-40);
+ctx.save();ctx.translate(sx,sy);ctx.rotate(a);
+ctx.fillStyle=c('--ink');ctx.beginPath();ctx.roundRect(-22,-22,44,14,3);ctx.fill();ctx.beginPath();ctx.roundRect(-12,-32,24,11,3);ctx.fill();
+ctx.fillStyle=c('--surface');ctx.fillRect(-9,-30,18,6);
+[-13,13].forEach(wx=>{ctx.globalAlpha=.35*p;ctx.fillStyle=c('--hot');ctx.beginPath();ctx.arc(wx,-4,6+8*p,0,7);ctx.fill();ctx.globalAlpha=1;
+ctx.fillStyle=c('--ink');ctx.beginPath();ctx.arc(wx,-4,6.5,0,7);ctx.fill();
+ctx.fillStyle=c('--blue');ctx.beginPath();ctx.arc(wx,-4,3.6,0,7);ctx.fill();ctx.globalAlpha=p;ctx.fillStyle=c('--hot');ctx.beginPath();ctx.arc(wx,-4,3.6,0,7);ctx.fill();ctx.globalAlpha=1});
+ctx.restore();
+const bx=20,bw=W-40,by=base+78,bh=34,ec=EC/ET,Uc=U0*(1-p),u=Uc/ET,q=Math.max(0,1-ec-u);
+let lx=20,ly=base+50;ctx.font=F;ctx.textAlign='left';
+[['energia cinetica',c('--blue'),eck],['energia potenziale',c('--pot'),epk],['energia termica',c('--hot'),eqk]].forEach(([t,col,cb])=>{if(!cb.checked)return;const w=ctx.measureText(t).width+24;if(lx+w>W-10&&lx>20){lx=20;ly+=16}ctx.fillStyle=col;ctx.fillRect(lx,ly-9,10,10);ctx.fillStyle=c('--ink');ctx.fillText(t,lx+14,ly);lx+=w+10});
+ctx.fillStyle=c('--road');ctx.fillRect(bx,by,bw,bh);ctx.font=FB;ctx.fillStyle=c('--on-blue');
+if(eck.checked){ctx.fillStyle=c('--blue');ctx.fillRect(bx,by,bw*ec,bh);if(bw*ec>56){ctx.fillStyle=c('--on-blue');ctx.textAlign='left';ctx.fillText(Math.round(EC)+' kJ',bx+6,by+21)}}
+if(epk.checked){ctx.fillStyle=c('--pot');ctx.fillRect(bx+bw*ec,by,bw*u,bh);if(bw*u>56){ctx.fillStyle=c('--on-blue');ctx.textAlign='left';ctx.fillText(Math.round(Uc)+' kJ',bx+bw*ec+6,by+21)}}
+if(eqk.checked){ctx.fillStyle=c('--hot');ctx.fillRect(bx+bw*(1-q),by,bw*q,bh);if(bw*q>56){ctx.fillStyle=c('--on-blue');ctx.textAlign='right';ctx.fillText(Math.round(U0*p)+' kJ',bx+bw-6,by+21)}}
+ctx.strokeStyle=c('--ink');ctx.lineWidth=1;ctx.strokeRect(bx,by,bw,bh);
+const ey=by+bh+12,ex=bx+bw*(ec+u);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bx,ey-4);ctx.lineTo(bx,ey);ctx.lineTo(ex,ey);ctx.lineTo(ex,ey-4);ctx.stroke();
+ctx.font='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif';ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText('Energia meccanica Em = Ec + U = '+Math.round(EC+Uc)+' kJ',bx,ey+18)}
+function finish(){running=false;go.textContent='Riguarda la discesa';go.disabled=false;
+const v=$('verdict'),ok=choice==='c',t=btns.find(b=>b.dataset.v===choice).textContent;v.className='verdict '+(ok?'ok':'no');
+v.innerHTML=(ok?'<b>Previsione corretta.</b> ':'Avevi scelto «'+t+'». <b>Non è così:</b> ')+'L’energia potenziale persa (196 kJ) non è sparita e non è diventata cinetica: si è trasformata in energia termica.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||choice===null)return;btns.forEach(b=>b.disabled=true);p=0;
+if(reduce.matches){p=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{p+=(n-last)/1000/(slow.checked?9:4);last=n;if(p>=1){p=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+btns.forEach(b=>b.onclick=()=>{choice=b.dataset.v;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));go.disabled=false;hint.textContent='Previsione registrata. Ora guarda cosa succede.'});
+go.onclick=run;eck.onchange=epk.onchange=eqk.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Energia potenziale gravitazionale: che energia ha un libro sul tavolo?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--carB:#1F5FD0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--carB:#6FA0FF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--carB:#6FA0FF;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.55rem,5.2vw,2.25rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.choices{display:flex;flex-direction:column;gap:.6rem;margin:.8rem 0;align-items:stretch;max-width:30rem}
+.choices button{text-align:left}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:250px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Energia · scheda 2 di 5</p>
+<h1>Un libro da 1 kg è fermo su un tavolo. Che energia potenziale ha?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Il tavolo è alto 1,0 m. Con g = 9,8 m/s², quale di queste risposte ti sembra giusta?</p>
+<div class="choices" role="group" aria-label="La tua previsione">
+<button data-v="9,8 J" aria-pressed="false">Un valore preciso: 9,8 J</button>
+<button data-v="0 J" aria-pressed="false">Un valore preciso: 0 J, perché è fermo</button>
+<button data-v="dip" aria-pressed="false">Dipende da dove scelgo il livello di riferimento</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Un libro cade da un tavolo al pavimento. Tre valori di energia potenziale, uno per ogni livello di riferimento: pavimento, tavolo, soffitto."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Lascia cadere il libro</button>
+<label><input type="checkbox" id="slow"> Rallenta ancora</label>
+</div>
+</div>
+<p class="meta" id="hint">Scegli una previsione per sbloccare la scena. Le tre linee tratteggiate sono tre possibili livelli zero.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Stesso libro, tre valori.</b> A parità di posizione l’energia potenziale cambia con il livello zero scelto: può essere positiva, nulla o negativa.</li>
+<li><b>Una cosa però non cambia.</b> Nella caduta di 1,0 m l’energia potenziale diminuisce di 9,8 J in tutti e tre i casi. Ha significato fisico la differenza, non il valore.</li>
+<li><b>Il motivo.</b> L’energia potenziale nasce dal lavoro della forza peso:</li>
+</ul>
+<div class="formula deriv"><p>Il libro scende da h<sub>i</sub> a h<sub>f</sub>. Forza peso e spostamento sono concordi.</p><ol>
+<li>Lavoro della forza peso: L = m g (h<sub>i</sub> − h<sub>f</sub>).</li>
+<li>Separo i termini: L = m g h<sub>i</sub> − m g h<sub>f</sub>.</li>
+<li>Chiamo U = m g h: L = U<sub>i</sub> − U<sub>f</sub> = <b>−ΔU</b>.</li>
+<li>Cambiare lo zero aggiunge la stessa costante a U<sub>i</sub> e U<sub>f</sub>: la differenza ΔU resta uguale.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Un vaso di massa 3,0 kg è su una mensola a 2,0 m dal pavimento. Viene portato su un tavolo alto 0,75 m. Calcola la variazione di energia potenziale e il lavoro della forza peso, scegliendo prima il pavimento e poi il tavolo come livello zero.</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Energia potenziale iniziale, zero sul pavimento</summary><div>h<sub>i</sub> = 2,0 m, quindi U<sub>i</sub> = m g h = 3,0 · 9,8 · 2,0 = 58,8 J.</div></details>
+<details class="step"><summary>2. Energia potenziale finale, zero sul pavimento</summary><div>h<sub>f</sub> = 0,75 m, quindi U<sub>f</sub> = 3,0 · 9,8 · 0,75 = 22,05 J.</div></details>
+<details class="step"><summary>3. Variazione ΔU con lo zero sul pavimento</summary><div>ΔU = U<sub>f</sub> − U<sub>i</sub> = 22,05 − 58,8 = <b>−36,75 J</b>.</div></details>
+<details class="step"><summary>4. Cosa cambia se lo zero è sul tavolo?</summary><div>Le altezze diventano: iniziale 2,0 − 0,75 = 1,25 m, finale 0. Quindi U<sub>i</sub> = 3,0 · 9,8 · 1,25 = 36,75 J e U<sub>f</sub> = 0.</div></details>
+<details class="step"><summary>5. Calcola ΔU con questo zero e confrontalo</summary><div>ΔU = 0 − 36,75 = <b>−36,75 J</b>. È uguale al caso precedente, anche se i valori di U<sub>i</sub> e U<sub>f</sub> sono diversi.</div></details>
+<details class="step"><summary>6. Quanto vale il lavoro della forza peso, e che segno ha?</summary><div>L = −ΔU = +36,75 J. Il segno è positivo perché il vaso scende: peso e spostamento sono concordi. Verifica: m g Δh = 3,0 · 9,8 · 1,25 = 36,75 J.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Errori tipici: pensare che U sia «l’altezza», o che un valore negativo sia sbagliato. Con g = 9,8 m/s² e m g costante, vale vicino alla superficie terrestre. Ponte verso la scheda 4: l’energia cinetica guadagnata nella caduta vale 9,8 J, cioè |ΔU|.</p></details>
+</main>
+<script>
+(()=>{
+const g=9.8,m=1,TF=Math.sqrt(2/g);
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),res=$('res'),hint=$('hint');
+const btns=[...document.querySelectorAll('.choices button')],reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let choice=null,t=0,running=false;
+const f=n=>Math.abs(n)<.05?'0 J':(n<0?'−':'')+Math.abs(n).toFixed(1).replace('.',',')+' J';
+const hh=tt=>Math.max(0,1-.5*g*tt*tt);
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=250*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),h=hh(t);
+ctx.clearRect(0,0,W,250);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif';
+const rw=Math.min(W*.5,220),tx=rw+14,fl=232,tb=152,ce=32;
+ctx.fillStyle=c('--road');ctx.fillRect(0,fl,W,18);
+ctx.fillStyle=c('--muted');ctx.fillRect(20,tb,80,6);ctx.fillRect(24,tb+6,5,fl-tb-6);ctx.fillRect(91,tb+6,5,fl-tb-6);
+const Z=[{y:ce,n:'zero al soffitto',u:m*g*(h-2.5)},{y:tb,n:'zero sul tavolo',u:m*g*(h-1)},{y:fl,n:'zero sul pavimento',u:m*g*h}];
+Z.forEach(z=>{ctx.setLineDash([4,4]);ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(10,z.y);ctx.lineTo(rw,z.y);ctx.stroke();ctx.setLineDash([]);
+ctx.textAlign='left';ctx.fillStyle=c('--muted');ctx.fillText(z.n,tx,z.y-6);
+ctx.fillStyle=c('--blue');ctx.font='bold 15px "Atkinson Hyperlegible",system-ui,sans-serif';ctx.fillText('U = '+f(z.u),tx,z.y+14);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif'});
+const by=fl-h*80-12;ctx.fillStyle=c('--carB');ctx.beginPath();ctx.roundRect(34,by,42,12,2);ctx.fill();
+ctx.fillStyle=c('--surface');ctx.fillRect(38,by+3,34,2)}
+function finish(){running=false;go.textContent='Riguarda la caduta';go.disabled=false;
+const v=$('verdict'),ok=choice==='dip';v.className='verdict '+(ok?'ok':'no');
+v.innerHTML=(ok?'<b>Previsione corretta.</b> ':'Avevi scelto «'+choice+'». <b>Non è così:</b> ')+'Lo stesso libro, nella stessa posizione, ha U = 9,8 J, 0 J oppure −14,7 J a seconda dello zero scelto.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||choice===null)return;btns.forEach(b=>b.disabled=true);t=0;
+if(reduce.matches){t=TF;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{t+=(n-last)/1000*(slow.checked?.12:.4);last=n;if(t>=TF){t=TF;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+btns.forEach(b=>b.onclick=()=>{choice=b.dataset.v;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));go.disabled=false;hint.textContent='Previsione registrata. Ora guarda cosa succede.'});
+go.onclick=run;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

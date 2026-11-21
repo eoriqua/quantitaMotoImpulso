@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistema isolato: la gravità è interna o esterna?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--pot:#B45F06;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.q{font-weight:700;margin:1.1rem 0 0}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.choices button{min-width:7rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:356px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Quantità di moto · scheda 3 di 4</p>
+<h1>La forza di gravità è interna o esterna? E cosa cambia per la quantità di moto del sistema?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Una pallina di 1 kg viene lasciata cadere. Studiamo la sua caduta in due modi, scegliendo due sistemi diversi.</p>
+<p class="q">Se il sistema è solo la pallina, la forza di gravità che agisce su di essa è una forza:</p>
+<div class="choices" role="group" aria-label="Previsione sul primo sistema" data-g="a">
+<button data-v="I" aria-pressed="false">Interna</button><button data-v="E" aria-pressed="false">Esterna</button>
+</div>
+<p class="q">Se il sistema è pallina e Terra insieme, mentre la pallina cade la quantità di moto totale del sistema:</p>
+<div class="choices" role="group" aria-label="Previsione sul secondo sistema" data-g="b">
+<button data-v="A" aria-pressed="false">Aumenta</button><button data-v="C" aria-pressed="false">Resta costante</button><button data-v="D" aria-pressed="false">Diminuisce</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Due schemi della caduta di una pallina. Nel primo il sistema è la sola pallina: la sua quantità di moto cresce. Nel secondo il sistema è pallina più Terra: le quantità di moto sono opposte e la somma resta zero."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Lascia cadere la pallina</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="bk" checked> Mostra il confine del sistema</label>
+</div>
+</div>
+<p class="meta" id="hint">Fai tutte e due le previsioni per sbloccare la scena. Le barre mostrano le quantità di moto: verso destra se rivolte in basso, verso sinistra se rivolte in alto.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Dipende dal sistema che scegli.</b> Con la sola pallina la gravità è una forza esterna, e la quantità di moto del sistema cresce (9,8 kg·m/s dopo 1 s). Con pallina e Terra la gravità è una coppia azione-reazione interna, e la quantità di moto totale resta zero.</li>
+<li><b>Anche la Terra si muove.</b> Ha quantità di moto uguale e opposta a quella della pallina, ma la sua massa è enorme (circa 6·10²⁴ kg): la velocità è di circa 10⁻²⁴ m/s, impossibile da vedere.</li>
+<li><b>«Isolato» non vuol dire «senza forze».</b> Due carrelli su un tavolo orizzontale subiscono peso e reazione normale, ma queste forze esterne si annullano: lungo l’orizzontale il sistema è isolato.</li>
+<li><b>Il motivo.</b> Lo si vede sommando il secondo principio per i due corpi:</li>
+</ul>
+<div class="formula deriv"><p>Sistema di due corpi A e B. La quantità di moto del sistema è p = p<sub>A</sub> + p<sub>B</sub>.</p><ol>
+<li>Secondo principio per A: Δp<sub>A</sub>/Δt = F<sub>est,A</sub> + F<sub>BA</sub>. Per B: Δp<sub>B</sub>/Δt = F<sub>est,B</sub> + F<sub>AB</sub>.</li>
+<li>Sommo le due relazioni: Δp/Δt = F<sub>est,A</sub> + F<sub>est,B</sub> + (F<sub>AB</sub> + F<sub>BA</sub>).</li>
+<li>Terzo principio: F<sub>AB</sub> = −F<sub>BA</sub>. Le forze interne si cancellano.</li>
+<li>Resta Δp/Δt = F<sub>est</sub> (la risultante delle forze esterne): <b>la quantità di moto del sistema varia solo per le forze esterne</b>.</li>
+<li>Un sistema è isolato quando la risultante delle forze esterne è nulla.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Due carrelli si muovono su una rotaia orizzontale senza attrito. Il carrello A (2,0 kg) va a +3,0 m/s, il carrello B (1,0 kg) a −4,0 m/s. Calcola la quantità di moto del sistema. Poi una mano spinge A con una forza esterna di 2,0 N per 5,0 s, nel verso positivo: quanto vale la quantità di moto del sistema alla fine?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Quanto vale la quantità di moto di A?</summary><div>Scelgo il verso positivo verso destra. p<sub>A</sub> = m<sub>A</sub> v<sub>A</sub> = 2,0 kg · 3,0 m/s = +6,0 kg·m/s.</div></details>
+<details class="step"><summary>2. E quella di B?</summary><div>p<sub>B</sub> = m<sub>B</sub> v<sub>B</sub> = 1,0 kg · (−4,0 m/s) = −4,0 kg·m/s. Il segno meno indica il verso opposto.</div></details>
+<details class="step"><summary>3. Quanto vale la quantità di moto del sistema?</summary><div>p = p<sub>A</sub> + p<sub>B</sub> = 6,0 kg·m/s − 4,0 kg·m/s = <b>+2,0 kg·m/s</b>.</div></details>
+<details class="step"><summary>4. Le forze tra A e B cambiano p del sistema?</summary><div>No. Sono forze interne: F<sub>AB</sub> = −F<sub>BA</sub>, agiscono per lo stesso intervallo, quindi Δp<sub>A</sub> = −Δp<sub>B</sub> e Δp = 0.</div></details>
+<details class="step"><summary>5. Peso e reazione normale cambiano p del sistema?</summary><div>Sono esterne, ma si annullano: la risultante esterna è nulla. Il sistema è isolato lungo l’orizzontale e p resta +2,0 kg·m/s.</div></details>
+<details class="step"><summary>6. E con la mano che spinge A per 5,0 s?</summary><div>Ora c’è una forza esterna: Δp = F<sub>est</sub> · Δt = 2,0 N · 5,0 s = 10 N·s = 10 kg·m/s. Quindi p<sub>finale</sub> = 2,0 kg·m/s + 10 kg·m/s = <b>12 kg·m/s</b>.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Pallina da 1 kg che cade per 1 s; la distanza di caduta nella scena è in scala ridotta. Il sistema Terra + pallina è isolato in buona approssimazione (si trascurano Sole e Luna); la massa della Terra è 5,97·10²⁴ kg. Errori tipici: «isolato» come «senza forze», pensare che le forze interne cambino p del sistema, dimenticare il segno delle quantità di moto. Ponte con la scheda successiva: se Δp = 0, la quantità di moto si conserva.</p></details>
+</main>
+<script>
+(()=>{
+const g=9.8,F='13px "Atkinson Hyperlegible",system-ui,sans-serif',FB='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif',F2='12px "Atkinson Hyperlegible",system-ui,sans-serif';
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),bk=$('bk'),res=$('res'),hint=$('hint');
+const groups=[...document.querySelectorAll('.choices')],reduce=matchMedia('(prefers-reduced-motion: reduce)'),ch={a:null,b:null};
+let tau=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',','),sg=n=>(n>.05?'+':n<-.05?'−':'')+fm(Math.abs(n),1);
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=356*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function arrow(x,y1,y2,col){ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y1);ctx.lineTo(x,y2);ctx.stroke();const s=y2>y1?1:-1;ctx.beginPath();ctx.moveTo(x,y2+s*1);ctx.lineTo(x-5,y2-s*8);ctx.lineTo(x+5,y2-s*8);ctx.closePath();ctx.fill()}
+function panel(y0,mode,t,W,c){
+const p=g*t,yb=y0+52+60*t*t,xc=150+(W-60-150)/2,k=(W-60-150)/2/10.5;
+ctx.font=FB;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(mode===1?'Sistema 1: solo la pallina':'Sistema 2: pallina e Terra',10,y0+16);
+ctx.font=F2;ctx.fillStyle=c('--muted');ctx.fillText(mode===1?'la gravità è una forza esterna':'la gravità è una forza interna',10,y0+33);
+ctx.fillStyle=c('--road');ctx.fillRect(10,y0+124,120,14);ctx.fillStyle=c('--muted');ctx.textAlign='center';ctx.fillText('Terra',70,y0+135);
+if(bk.checked){ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle=c('--ink');ctx.lineWidth=1.5;ctx.beginPath();if(mode===1)ctx.roundRect(54,yb-15,32,30,6);else ctx.roundRect(6,y0+42,128,100,8);ctx.stroke();ctx.restore()}
+ctx.fillStyle=c('--blue');ctx.beginPath();ctx.arc(70,yb,7,0,7);ctx.fill();
+arrow(70,yb+9,yb+27,c('--ink'));if(mode===2)arrow(100,y0+122,y0+104,c('--ink'));
+const rows=[{l:'p pallina',v:p,col:'--blue',in:true},{l:mode===1?'p Terra (fuori dal sistema)':'p Terra',v:-p,col:'--pot',in:mode===2},{l:'p sistema',v:mode===1?p:0,col:'--ink',in:true}];
+ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(xc,y0+42);ctx.lineTo(xc,y0+146);ctx.stroke();
+rows.forEach((r,i)=>{const ry=y0+54+i*33;ctx.font=F2;ctx.fillStyle=c('--muted');ctx.textAlign='left';ctx.fillText(r.l,150,ry-4);
+ctx.globalAlpha=r.in?1:.35;ctx.fillStyle=c(r.col);const w=Math.abs(r.v)*k;ctx.fillRect(r.v<0?xc-w:xc,ry,w,16);ctx.globalAlpha=1;
+ctx.font=F;ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(sg(r.v),W-8,ry+13)})}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),t=tau;
+ctx.clearRect(0,0,W,356);panel(0,1,t,W,c);ctx.strokeStyle=c('--line');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,158);ctx.lineTo(W,158);ctx.stroke();panel(164,2,t,W,c);
+ctx.font=F;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText('Tempo di caduta: t = '+fm(t,2)+' s',10,334);
+ctx.font=F2;ctx.fillStyle=c('--muted');ctx.fillText('Velocità della Terra: circa '+(t>.05?'1,6·10⁻²⁴ m/s':'0 m/s')+' (valori p in kg·m/s)',10,350)}
+function finish(){running=false;go.textContent='Riguarda la caduta';go.disabled=false;
+const oka=ch.a==='E',okb=ch.b==='C',v=$('verdict');v.className='verdict '+(oka&&okb?'ok':'no');
+v.innerHTML='<b>Sistema 1: '+(oka?'previsione corretta.':'non era così.')+'</b> La gravità è esterna e p del sistema cresce fino a 9,8 kg·m/s. <b>Sistema 2: '+(okb?'previsione corretta.':'non era così.')+'</b> La gravità è interna: p totale resta 0.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||!ch.a||!ch.b)return;groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.disabled=true));tau=0;
+if(reduce.matches){tau=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{tau+=(n-last)/1000/(slow.checked?9:4);last=n;if(tau>=1){tau=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch[gr.dataset.g]=b.dataset.v;gr.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(ch.a&&ch.b){go.disabled=false;hint.textContent='Previsioni registrate. Ora guarda cosa succede.'}}));
+go.onclick=run;bk.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

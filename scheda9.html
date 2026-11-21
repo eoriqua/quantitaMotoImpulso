@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conservazione della quantità di moto: il razzo nel vuoto</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--pot:#B45F06;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.q{font-weight:700;margin:1.1rem 0 0}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.choices button{min-width:7rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:300px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Quantità di moto · scheda 4 di 4</p>
+<h1>Come accelera un razzo nel vuoto, se non ha nulla su cui spingere?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Un razzo di 900 kg contiene 100 kg di gas, tutto fermo nello spazio. Il motore espelle all’indietro il gas a 2000 m/s. Il sistema razzo + gas è isolato.</p>
+<p class="q">Dopo l’espulsione, la quantità di moto totale del sistema vale:</p>
+<div class="choices" role="group" aria-label="Previsione sulla quantità di moto totale" data-g="a">
+<button data-v="Z" aria-pressed="false">Zero</button><button data-v="P" aria-pressed="false">Positiva (in avanti)</button><button data-v="N" aria-pressed="false">Negativa (indietro)</button>
+</div>
+<p class="q">Il razzo ha massa 9 volte quella del gas. La sua velocità, in modulo, rispetto a quella del gas è:</p>
+<div class="choices" role="group" aria-label="Previsione sulla velocità del razzo" data-g="b">
+<button data-v="M" aria-pressed="false">Maggiore</button><button data-v="U" aria-pressed="false">Uguale</button><button data-v="m" aria-pressed="false">Minore</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Un razzo fermo espelle gas all’indietro. Il razzo parte in avanti, il gas va indietro. Le barre mostrano quantità di moto opposte e somma sempre zero."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Accendi il motore</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="vk" checked> Mostra le velocità</label>
+</div>
+</div>
+<p class="meta" id="hint">Fai tutte e due le previsioni per sbloccare la scena. Le barre mostrano le quantità di moto: verso destra in avanti, verso sinistra all’indietro.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Il razzo non spinge sull’aria.</b> Spinge i gas all’indietro, e i gas spingono il razzo in avanti: sono forze interne al sistema, una coppia azione-reazione. Nel vuoto funziona benissimo.</li>
+<li><b>La quantità di moto totale non cambia.</b> Il gas acquista −200 000 kg·m/s, il razzo +200 000 kg·m/s: la somma resta zero in ogni istante, come prima.</li>
+<li><b>Massa maggiore, velocità minore.</b> Le due quantità di moto sono uguali in modulo, ma il razzo ha massa 9 volte maggiore: la sua velocità (circa 222 m/s) è 9 volte minore di quella del gas.</li>
+<li><b>Il motivo.</b> È la conseguenza del fatto che il sistema è isolato:</li>
+</ul>
+<div class="formula deriv"><p>Sistema razzo + gas, nel vuoto.</p><ol>
+<li>Le uniche forze sono interne (spinta dei gas sul razzo e del razzo sui gas): la risultante delle forze esterne è nulla, il sistema è isolato.</li>
+<li>Per un sistema isolato Δp = 0, cioè <b>p<sub>prima</sub> = p<sub>dopo</sub></b>: la quantità di moto si conserva.</li>
+<li>Prima è tutto fermo: p<sub>prima</sub> = 0.</li>
+<li>Dopo: m<sub>R</sub> v<sub>R</sub> + m<sub>G</sub> v<sub>G</sub> = 0, quindi v<sub>R</sub> = −(m<sub>G</sub> / m<sub>R</sub>) v<sub>G</sub>.</li>
+<li>Verso opposto, e modulo ridotto del rapporto delle masse: 100 / 900 = 1/9.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Due pattinatori fermi sul ghiaccio si spingono. Il pattinatore A ha massa 60 kg, il pattinatore B 40 kg. Dopo la spinta B si muove a +3,0 m/s. Con quale velocità si muove A? Qual è l’energia cinetica del sistema dopo la spinta?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Il sistema è isolato?</summary><div>Sì, lungo l’orizzontale: peso e reazione normale si annullano e l’attrito col ghiaccio è trascurabile. La spinta tra i due è una forza interna.</div></details>
+<details class="step"><summary>2. Quanto vale la quantità di moto prima della spinta?</summary><div>Sono fermi: p<sub>prima</sub> = 0 kg·m/s.</div></details>
+<details class="step"><summary>3. Come scrivi la quantità di moto dopo?</summary><div>p<sub>dopo</sub> = m<sub>A</sub> v<sub>A</sub> + m<sub>B</sub> v<sub>B</sub> = 60 kg · v<sub>A</sub> + 40 kg · 3,0 m/s = 60 kg · v<sub>A</sub> + 120 kg·m/s.</div></details>
+<details class="step"><summary>4. Applica la conservazione e ricava v<sub>A</sub></summary><div>p<sub>prima</sub> = p<sub>dopo</sub>: 0 = 60 kg · v<sub>A</sub> + 120 kg·m/s, quindi v<sub>A</sub> = −120 kg·m/s / 60 kg = <b>−2,0 m/s</b>. Il segno meno indica il verso opposto a B.</div></details>
+<details class="step"><summary>5. Come verifichi con gli impulsi?</summary><div>Δp<sub>B</sub> = 40 kg · 3,0 m/s − 0 = +120 N·s e Δp<sub>A</sub> = 60 kg · (−2,0 m/s) − 0 = −120 N·s. Sono impulsi uguali e opposti, come vuole il terzo principio.</div></details>
+<details class="step"><summary>6. Quanto vale l’energia cinetica dopo la spinta?</summary><div>E<sub>c</sub> = ½ · 60 kg · (2,0 m/s)² + ½ · 40 kg · (3,0 m/s)² = 120 J + 180 J = <b>300 J</b>. Prima era 0 J: la quantità di moto si conserva anche se l’energia cinetica aumenta (l’energia viene dai muscoli dei pattinatori).</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Modello semplificato: il gas viene espulso tutto insieme a 2000 m/s rispetto al sistema iniziale; un razzo vero espelle gas in modo continuo e la sua massa cambia nel tempo. Le velocità sono nel riferimento in cui il sistema è inizialmente fermo. L’energia cinetica finale non è uguale a quella iniziale: viene dall’energia chimica del combustibile, quindi qui l’energia meccanica non si conserva mentre la quantità di moto sì. Errori tipici: «il razzo spinge sull’aria», dimenticare il segno delle velocità, pensare che «si conserva» voglia dire «non cambia nulla». Ponte con gli urti: la conservazione della quantità di moto vale sempre nei sistemi isolati, quella dell’energia solo in certi casi.</p></details>
+</main>
+<script>
+(()=>{
+const mR=900,mG=100,vG0=-2000,vR0=-mG*vG0/mR,P0=mG*Math.abs(vG0);
+const F='13px "Atkinson Hyperlegible",system-ui,sans-serif',FB='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif',F2='12px "Atkinson Hyperlegible",system-ui,sans-serif';
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),vk=$('vk'),res=$('res'),hint=$('hint');
+const groups=[...document.querySelectorAll('.choices')],reduce=matchMedia('(prefers-reduced-motion: reduce)'),ch={a:null,b:null};
+let tau=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',','),th=n=>String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,' '),sg=n=>(n>.5?'+':n<-.5?'−':'')+th(n);
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=300*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim();
+let s=Math.min(1,Math.max(0,(tau-.15)/.15));s=s*s*(3-2*s);const u=Math.max(0,tau-.15)/.85,rx=50+50*u;
+ctx.clearRect(0,0,W,300);ctx.font=FB;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(tau<.15?'Prima: tutto fermo':'Dopo: i gas escono all’indietro',10,16);
+ctx.fillStyle=c('--blue');ctx.beginPath();ctx.roundRect(rx,48,96,34,6);ctx.fill();ctx.beginPath();ctx.moveTo(rx+96,48);ctx.lineTo(rx+96,82);ctx.lineTo(rx+124,65);ctx.closePath();ctx.fill();
+ctx.beginPath();ctx.moveTo(rx+10,48);ctx.lineTo(rx+2,34);ctx.lineTo(rx+26,48);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(rx+10,82);ctx.lineTo(rx+2,96);ctx.lineTo(rx+26,82);ctx.closePath();ctx.fill();
+ctx.fillStyle=c('--surface');ctx.beginPath();ctx.arc(rx+66,65,7,0,7);ctx.fill();
+for(let i=0;i<6;i++){const bx=rx+10+i*9,gx=bx-u*(230+34*i);if(gx<-10)continue;ctx.globalAlpha=Math.max(.15,Math.min(1,gx/80+.4));ctx.fillStyle=c('--pot');ctx.beginPath();ctx.arc(gx,65+(i%2?5:-5),7,0,7);ctx.fill()}ctx.globalAlpha=1;
+ctx.font=F2;ctx.fillStyle=c('--muted');ctx.fillText('razzo 900 kg + gas 100 kg',rx,108);
+const xc=(10+W-96)/2,k=(W-96-10)/2/(P0*1.05),rows=[{l:'p razzo (900 kg)',v:P0*s,col:'--blue'},{l:'p gas (100 kg)',v:-P0*s,col:'--pot'},{l:'p sistema (razzo + gas)',v:0,col:'--ink'}];
+ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(xc,126);ctx.lineTo(xc,236);ctx.stroke();
+rows.forEach((r,i)=>{const ry=140+i*34;ctx.font=F2;ctx.fillStyle=c('--muted');ctx.textAlign='left';ctx.fillText(r.l,10,ry-4);ctx.fillStyle=c(r.col);const w=Math.abs(r.v)*k;ctx.fillRect(r.v<0?xc-w:xc,ry,w,16);
+ctx.font=F;ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(sg(r.v),W-8,ry+13)});
+ctx.font=F2;ctx.fillStyle=c('--muted');ctx.textAlign='left';ctx.fillText('quantità di moto in kg·m/s',10,250);
+if(vk.checked){ctx.font=F;ctx.fillStyle=c('--ink');ctx.fillText('v razzo = '+sg(vR0*s)+' m/s',10,274);ctx.fillText('v gas = '+sg(vG0*s)+' m/s',10,292)}}
+function finish(){running=false;go.textContent='Riaccendi il motore';go.disabled=false;
+const oka=ch.a==='Z',okb=ch.b==='m',v=$('verdict');v.className='verdict '+(oka&&okb?'ok':'no');
+v.innerHTML='<b>Quantità di moto totale: '+(oka?'previsione corretta.':'non era così.')+'</b> Resta zero: +200 000 kg·m/s (razzo) e −200 000 kg·m/s (gas). <b>Velocità del razzo: '+(okb?'previsione corretta.':'non era così.')+'</b> È circa 222 m/s, nove volte minore di quella del gas (2000 m/s).';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||!ch.a||!ch.b)return;groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.disabled=true));tau=0;
+if(reduce.matches){tau=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{tau+=(n-last)/1000/(slow.checked?9:4);last=n;if(tau>=1){tau=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch[gr.dataset.g]=b.dataset.v;gr.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(ch.a&&ch.b){go.disabled=false;hint.textContent='Previsioni registrate. Ora guarda cosa succede.'}}));
+go.onclick=run;vk.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

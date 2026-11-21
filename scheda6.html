@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quantità di moto: palla da bowling o proiettile?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--pot:#B45F06;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.q{font-weight:700;margin:1.1rem 0 0}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.choices button{min-width:7rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:290px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Quantità di moto · scheda 1 di 4</p>
+<h1>Palla da bowling o proiettile: chi ha più quantità di moto, e chi si ferma prima se li arresto con la stessa forza?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Una palla da bowling di 6 kg rotola a 2 m/s. Un proiettile di 10 g viaggia a 800 m/s. Immagina di arrestarli entrambi con la stessa forza costante di 100 N.</p>
+<p class="q">Quale ha più quantità di moto?</p>
+<div class="choices" role="group" aria-label="Previsione sulla quantità di moto" data-g="p">
+<button data-v="B" aria-pressed="false">La palla da bowling</button><button data-v="P" aria-pressed="false">Il proiettile</button><button data-v="=" aria-pressed="false">Hanno la stessa</button>
+</div>
+<p class="q">Quale si ferma prima, cioè in meno tempo?</p>
+<div class="choices" role="group" aria-label="Previsione sul tempo di arresto" data-g="t">
+<button data-v="B" aria-pressed="false">La palla da bowling</button><button data-v="P" aria-pressed="false">Il proiettile</button><button data-v="=" aria-pressed="false">Insieme</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Due oggetti, palla da bowling e proiettile, vengono frenati con la stessa forza. Le barre mostrano come diminuiscono quantità di moto ed energia cinetica; sotto, tempo e spazio percorso."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Applica la forza frenante</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="eck" checked> Mostra energia cinetica</label>
+</div>
+</div>
+<p class="meta" id="hint">Fai tutte e due le previsioni per sbloccare la scena. Il tempo scorre al rallentatore: la frenata dura meno di un decimo di secondo.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Più quantità di moto, più tempo per fermarsi.</b> La palla (p = 12 kg·m/s) si ferma dopo 0,12 s, il proiettile (p = 8 kg·m/s) dopo 0,08 s. La quantità di moto misura la resistenza al cambiamento del moto: a parità di forza, quanto tempo serve per fermare.</li>
+<li><b>Lo spazio è un’altra storia.</b> Il proiettile percorre 32 m, la palla solo 12 cm. Qui conta l’energia cinetica: 3200 J contro 12 J, come nella scheda sull’energia cinetica.</li>
+<li><b>Il motivo.</b> Il tempo di arresto discende dal secondo principio:</li>
+</ul>
+<div class="formula deriv"><p>Freno un corpo con una forza costante F fino a fermarlo.</p><ol>
+<li>Secondo principio: F = m a = m Δv / Δt = Δp / Δt.</li>
+<li>Il corpo parte con p e si ferma (p finale = 0): |Δp| = p, quindi F · Δt = p.</li>
+<li>Ricavo il tempo: <b>Δt = p / F</b>. A parità di forza, il tempo di arresto è proporzionale alla quantità di moto.</li>
+<li>Lo spazio invece viene dal lavoro: F · d = E<sub>c</sub>, cioè d = E<sub>c</sub> / F.</li>
+<li>Quindi p e E<sub>c</sub> misurano cose diverse: p = m v cresce con v, E<sub>c</sub> = ½ m v² cresce con v².</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Un camion di 8000 kg viaggia a 10 m/s, un’auto di 1000 kg a 30 m/s. Confronta quantità di moto ed energia cinetica. Poi calcola il tempo e lo spazio per fermarli con una stessa forza frenante di 4000 N.</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri. Scrivi sempre le unità di misura: se non tornano, la formula è sbagliata.</p>
+<details class="step"><summary>1. Quanto vale la quantità di moto di ciascuno?</summary><div>Camion: p = m v = 8000 kg · 10 m/s = 80 000 kg·m/s. Auto: p = 1000 kg · 30 m/s = 30 000 kg·m/s. Il camion ha la quantità di moto maggiore.</div></details>
+<details class="step"><summary>2. E l’energia cinetica?</summary><div>Camion: E<sub>c</sub> = ½ m v² = ½ · 8000 kg · (10 m/s)² = 400 000 J. Auto: ½ · 1000 kg · (30 m/s)² = 450 000 J. Qui è l’auto ad averne di più. Unità: kg · (m/s)² = kg·m²/s² = J.</div></details>
+<details class="step"><summary>3. Quanto tempo serve per fermarli?</summary><div>Δt = p / F. Camion: 80 000 kg·m/s / 4000 N = <b>20 s</b>. Auto: 30 000 kg·m/s / 4000 N = <b>7,5 s</b>. Unità: (kg·m/s) / N = (kg·m/s) / (kg·m/s²) = s.</div></details>
+<details class="step"><summary>4. Quanto spazio serve per fermarli?</summary><div>d = E<sub>c</sub> / F. Camion: 400 000 J / 4000 N = <b>100 m</b>. Auto: 450 000 J / 4000 N = <b>112,5 m</b>. Unità: J / N = (N·m) / N = m.</div></details>
+<details class="step"><summary>5. Come verifichi l’auto con la cinematica?</summary><div>a = F / m = 4000 N / 1000 kg = 4,0 m/s² (N / kg = m/s²). Tempo: t = v / a = 30 m/s / 4,0 m/s² = 7,5 s. Spazio: d = v² / (2a) = (30 m/s)² / (2 · 4,0 m/s²) = 112,5 m. Coincide.</div></details>
+<details class="step"><summary>6. Cosa ti dice il confronto?</summary><div>Il camion ha più quantità di moto e impiega più tempo a fermarsi. L’auto ha più energia cinetica e percorre più spazio. Le due grandezze rispondono a domande diverse.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Dati della scena: palla 6 kg a 2 m/s (p = 12 kg·m/s, E<sub>c</sub> = 12 J), proiettile 10 g a 800 m/s (p = 8 kg·m/s, E<sub>c</sub> = 3200 J), forza frenante costante di 100 N. È un esperimento ideale: nessuna forza reale è costante su un proiettile. Errori tipici: confondere p con E<sub>c</sub>, scrivere p = ½ m v², dimenticare che p è un vettore (qui moto rettilineo, segno positivo). L’unità kg·m/s equivale a N·s: ponte con la scheda sull’impulso.</p></details>
+</main>
+<script>
+(()=>{
+const FR=100,OB=[{n:'Bowling',m:6,v:2},{n:'Proiettile',m:.01,v:800}];OB.forEach(o=>{o.p=o.m*o.v;o.T=o.p/FR;o.E=.5*o.m*o.v*o.v});
+const TT=OB[0].T,F='13px "Atkinson Hyperlegible",system-ui,sans-serif',FB='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif';
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),eck=$('eck'),res=$('res'),hint=$('hint');
+const groups=[...document.querySelectorAll('.choices')],reduce=matchMedia('(prefers-reduced-motion: reduce)'),ch={p:null,t:null};
+let tau=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',',');
+const st=(o,t)=>{const tt=Math.min(t,o.T),p=Math.max(0,o.p-FR*t);return{p,e:p*p/(2*o.m),s:o.v*tt-.5*(FR/o.m)*tt*tt,stop:t>=o.T}};
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=290*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),t=tau*TT,x0=92,x1=W-96,bw=x1-x0;
+ctx.clearRect(0,0,W,290);ctx.font=FB;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText('Quantità di moto p (kg·m/s)',10,16);
+const S=OB.map(o=>st(o,t));
+OB.forEach((o,i)=>{const y=26+i*30;ctx.font=F;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(o.n,10,y+16);
+ctx.fillStyle=c('--road');ctx.fillRect(x0,y,bw,22);ctx.fillStyle=c('--blue');ctx.fillRect(x0,y,bw*S[i].p/OB[0].p,22);
+ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(fm(S[i].p,1),W-10,y+16)});
+if(eck.checked){ctx.font=FB;ctx.textAlign='left';ctx.fillStyle=c('--ink');ctx.fillText('Energia cinetica Ec (J)',10,106);
+OB.forEach((o,i)=>{const y=116+i*30,w=bw*S[i].e/OB[1].E;ctx.font=F;ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(o.n,10,y+16);
+ctx.fillStyle=c('--road');ctx.fillRect(x0,y,bw,22);ctx.fillStyle=c('--pot');ctx.fillRect(x0,y,S[i].e>0?Math.max(2,w):0,22);
+ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(Math.round(S[i].e)+'',W-10,y+16)})}
+ctx.font=FB;ctx.textAlign='left';ctx.fillStyle=c('--ink');ctx.fillText('Dall’inizio della frenata: t = '+fm(t,2)+' s',10,206);
+OB.forEach((o,i)=>{ctx.font=F;ctx.fillStyle=c('--ink');ctx.fillText(o.n+': spazio percorso = '+fm(S[i].s,2)+' m'+(S[i].stop?' (fermo)':''),10,230+i*24)})}
+function finish(){running=false;go.textContent='Riguarda la frenata';go.disabled=false;
+const okp=ch.p==='B',okt=ch.t==='P',v=$('verdict');v.className='verdict '+(okp&&okt?'ok':'no');
+v.innerHTML='<b>Quantità di moto: '+(okp?'previsione corretta.':'non era così.')+'</b> Palla 12 contro proiettile 8 kg·m/s. <b>Arresto: '+(okt?'previsione corretta.':'non era così.')+'</b> Il proiettile si ferma dopo 0,08 s, la palla dopo 0,12 s.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||!ch.p||!ch.t)return;groups.forEach(g=>g.querySelectorAll('button').forEach(b=>b.disabled=true));tau=0;
+if(reduce.matches){tau=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{tau+=(n-last)/1000/(slow.checked?9:4);last=n;if(tau>=1){tau=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+groups.forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch[g.dataset.g]=b.dataset.v;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(ch.p&&ch.t){go.disabled=false;hint.textContent='Previsioni registrate. Ora guarda cosa succede.'}}));
+go.onclick=run;eck.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

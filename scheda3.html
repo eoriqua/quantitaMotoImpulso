@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Energia potenziale elastica: se comprimo la molla il doppio, quanta energia in più?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.55rem,5.2vw,2.25rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.choices{display:flex;flex-direction:column;gap:.6rem;margin:.8rem 0;align-items:stretch;max-width:20rem}
+.choices button{text-align:left}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:270px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Energia · scheda 3 di 5</p>
+<h1>Se comprimo una molla il doppio, quanta energia in più immagazzina?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Due molle identiche (k = 200 N/m). La prima viene compressa di 10 cm, la seconda di 20 cm. L’energia immagazzinata nella seconda è, rispetto alla prima:</p>
+<div class="choices" role="group" aria-label="La tua previsione">
+<button data-v="2" aria-pressed="false">2 volte</button>
+<button data-v="3" aria-pressed="false">3 volte</button>
+<button data-v="4" aria-pressed="false">4 volte</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Due molle vengono compresse, una di 10 cm e una di 20 cm. Il grafico forza-compressione mostra che l’area sotto la retta, cioè l’energia, è quattro volte maggiore per la seconda."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Comprimi le molle</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+</div>
+</div>
+<p class="meta" id="hint">Scegli una previsione per sbloccare la scena. L’area colorata sotto la retta è il lavoro fatto per comprimere.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Il doppio della compressione, quattro volte l’energia.</b> Da 1,00 J a 4,00 J: come per la velocità nell’energia cinetica, la dipendenza è quadratica.</li>
+<li><b>Guarda il grafico.</b> La forza della molla cresce con la compressione, quindi il lavoro non è semplicemente forza per spostamento. L’area del triangolo grande ha base e altezza doppie: è quattro volte quella del piccolo.</li>
+<li><b>Il motivo.</b> L’energia potenziale elastica è il lavoro fatto per comprimere la molla:</li>
+</ul>
+<div class="formula deriv"><p>Comprimo la molla di x partendo da zero. Chi comprime esercita una forza uguale e opposta a quella della molla.</p><ol>
+<li>Legge di Hooke: la forza da applicare è F = k x, e cresce da 0 a k x.</li>
+<li>Il lavoro è l’area del triangolo sotto F(x): L = ½ · x · (k x).</li>
+<li>Questo lavoro resta immagazzinato: <b>U = ½ k x²</b>.</li>
+<li>Se x raddoppia, U cresce di 2² = 4 volte; se x triplica, di 9 volte.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Una molla di costante elastica k = 250 N/m viene compressa di 8,0 cm. Quanta energia immagazzina? Di quanto va compressa per immagazzinare il triplo dell’energia?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Le unità sono coerenti? Che cosa fai?</summary><div>No: i centimetri vanno convertiti in metri. x = 8,0 cm = 0,080 m.</div></details>
+<details class="step"><summary>2. Quanta energia elastica immagazzina?</summary><div>U = ½ k x² = ½ · 250 · 0,080² = ½ · 250 · 0,0064 = <b>0,80 J</b>.</div></details>
+<details class="step"><summary>3. Come puoi verificarlo con il grafico forza-compressione?</summary><div>La forza finale è F = k x = 250 · 0,080 = 20 N. L’area del triangolo vale ½ · 0,080 · 20 = 0,80 J. Coincide.</div></details>
+<details class="step"><summary>4. Quanto vale l’energia triplicata, e quale compressione serve?</summary><div>U′ = 3 · 0,80 = 2,4 J. Da U′ = ½ k x′²: x′ = √(2U′ / k) = √(4,8 / 250) ≈ 0,139 m = <b>13,9 cm</b>.</div></details>
+<details class="step"><summary>5. Quale errore conviene evitare?</summary><div>Triplicare anche la compressione (x′ = 24 cm) è sbagliato: poiché U ∝ x², darebbe 9 volte l’energia, cioè 7,2 J. La compressione giusta è x√3 = 8,0 · 1,73 ≈ 13,9 cm.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Nella scena k = 200 N/m: 10 cm danno 1,00 J, 20 cm danno 4,00 J. Errori tipici: usare L = F · x con la forza finale (si ottiene il doppio del valore corretto) e pensare che U sia proporzionale a x. La legge di Hooke vale entro il limite elastico. Ponte con la scheda 2: è un’altra energia «immagazzinata» nella configurazione del sistema, ma qui lo zero è la molla a riposo e U non è mai negativa.</p></details>
+</main>
+<script>
+(()=>{
+const k=200,XA=.10,XB=.20,FM=k*XB;
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),res=$('res'),hint=$('hint');
+const btns=[...document.querySelectorAll('.choices button')],reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let choice=null,p=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',',');
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=270*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function spring(x0,xe,y,col){ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x0,y);const N=14;
+for(let i=0;i<N;i++)ctx.lineTo(x0+(xe-x0)*(.08+.84*(i+.5)/N),y+(i%2?8:-8));ctx.lineTo(xe,y);ctx.stroke()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),S=1.833*W;
+ctx.clearRect(0,0,W,270);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif';ctx.textAlign='left';
+const rows=[{n:'Molla A',y:42,x:XA*p,col:c('--muted')},{n:'Molla B',y:104,x:XB*p,col:c('--blue')}];
+rows.forEach(r=>{const xe=10+(.30-r.x)*S,U=.5*k*r.x*r.x;
+ctx.fillStyle=c('--ink');ctx.fillText(r.n+': x = '+fm(r.x*100,1)+' cm, U = '+fm(U,2)+' J',10,r.y-22);
+ctx.fillStyle=c('--road');ctx.fillRect(4,r.y-20,6,40);
+ctx.setLineDash([3,4]);ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(10+.30*S,r.y-18);ctx.lineTo(10+.30*S,r.y+18);ctx.stroke();ctx.setLineDash([]);
+spring(10,xe,r.y,r.col);ctx.fillStyle=r.col;ctx.fillRect(xe,r.y-14,26,28)});
+const gx0=48,gx1=W-14,gy0=236,gy1=150,X=x=>gx0+x/XB*(gx1-gx0),Y=F=>gy0-F/FM*(gy0-gy1);
+ctx.strokeStyle=c('--muted');ctx.fillStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx0,gy1-6);ctx.lineTo(gx0,gy0);ctx.lineTo(gx1,gy0);ctx.stroke();
+ctx.textAlign='center';[0,.1,.2].forEach(x=>ctx.fillText(Math.round(x*100)+'',X(x),gy0+16));ctx.fillText('x (cm)',(gx0+gx1)/2,gy0+32);
+ctx.textAlign='right';[0,20,40].forEach(F=>ctx.fillText(F+'',gx0-6,Y(F)+4));ctx.fillText('F (N)',gx0+22,gy1-12);
+ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(XB),Y(FM));ctx.stroke();ctx.setLineDash([]);
+const tri=(x,col,al)=>{ctx.globalAlpha=al;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(x),Y(0));ctx.lineTo(X(x),Y(k*x));ctx.closePath();ctx.fill();ctx.globalAlpha=1};
+tri(XB*p,c('--blue'),.35);tri(XA*p,c('--ink'),.5);
+if(p>=1){ctx.textAlign='left';ctx.fillStyle=c('--ink');ctx.fillText('area B = 4 × area A',gx0+12,gy1+10)}}
+function finish(){running=false;go.textContent='Riguarda la compressione';go.disabled=false;
+const v=$('verdict'),ok=choice==='4';v.className='verdict '+(ok?'ok':'no');
+v.innerHTML=(ok?'<b>Previsione corretta: 4 volte.</b> ':'Avevi previsto '+choice+' volte. <b>Non è così:</b> ')+'L’energia passa da 1,00 J (10 cm) a 4,00 J (20 cm), cioè quattro volte.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||choice===null)return;btns.forEach(b=>b.disabled=true);p=0;
+if(reduce.matches){p=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{p+=(n-last)/1000/(slow.checked?8:3.5);last=n;if(p>=1){p=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+btns.forEach(b=>b.onclick=()=>{choice=b.dataset.v;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));go.disabled=false;hint.textContent='Previsione registrata: '+choice+' volte. Ora guarda cosa succede.'});
+go.onclick=run;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

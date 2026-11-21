@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Impulso: airbag e colpo di karate</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--pot:#B45F06;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--pot:#F0A55E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.q{font-weight:700;margin:1.1rem 0 0}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.choices button{min-width:7rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:310px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Quantità di moto · scheda 2 di 4</p>
+<h1>Airbag e colpo di karate: se la quantità di moto da annullare è la stessa, perché gli effetti sono così diversi?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Un manichino di 75 kg viaggia a 54 km/h (15 m/s) e deve essere arrestato. Nel primo caso urta un cruscotto rigido e si ferma in 0,02 s. Nel secondo incontra un airbag e si ferma in 0,10 s.</p>
+<p class="q">La variazione di quantità di moto con l’airbag, rispetto al cruscotto, è:</p>
+<div class="choices" role="group" aria-label="Previsione sulla variazione di quantità di moto" data-g="p">
+<button data-v="m" aria-pressed="false">Minore</button><button data-v="=" aria-pressed="false">Uguale</button><button data-v="M" aria-pressed="false">Maggiore</button>
+</div>
+<p class="q">La forza media sul manichino con l’airbag, rispetto al cruscotto, è:</p>
+<div class="choices" role="group" aria-label="Previsione sulla forza media" data-g="f">
+<button data-v="m" aria-pressed="false">Minore</button><button data-v="=" aria-pressed="false">Uguale</button><button data-v="M" aria-pressed="false">Maggiore</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Grafico della forza nel tempo durante l’arresto di un manichino: contro il cruscotto la curva è alta e stretta, con l’airbag è bassa e larga. Le due aree sono uguali."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Arresta il manichino</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="fmk" checked> Mostra la forza media</label>
+</div>
+</div>
+<p class="meta" id="hint">Fai tutte e due le previsioni per sbloccare la scena. Il grafico mostra la forza nel tempo; l’area sotto la curva è l’impulso.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Stessa area, stesso impulso.</b> Le due curve racchiudono la stessa area, 1125 N·s: è l’impulso, uguale alla variazione di quantità di moto (75 kg · 15 m/s).</li>
+<li><b>Cambia il tempo, cambia la forza.</b> Con l’airbag il tempo di arresto è cinque volte maggiore, quindi la forza media è cinque volte minore (11 kN contro 56 kN). Il rettangolo tratteggiato è la forza costante che darebbe lo stesso impulso.</li>
+<li><b>Il colpo di karate è il caso opposto.</b> La mano si arresta contro il mattone in pochi millisecondi: la forza è molto grande. Una spinta lenta, con la stessa variazione di quantità di moto, darebbe una forza molto minore.</li>
+<li><b>Il motivo.</b> Segue dal secondo principio:</li>
+</ul>
+<div class="formula deriv"><ol>
+<li>Dal secondo principio: F = Δp / Δt, quindi F · Δt = Δp.</li>
+<li>Con forza costante, l’impulso I = F · Δt è uguale alla variazione di quantità di moto: I = Δp (teorema dell’impulso).</li>
+<li>Se la forza varia nel tempo, l’impulso è l’area sotto il grafico F-t e vale ancora I = Δp. Equivale a F<sub>media</sub> · Δt, cioè all’area del rettangolo tratteggiato.</li>
+<li>Con Δp fissato, F<sub>media</sub> · Δt è costante: se Δt aumenta di 5 volte, F<sub>media</sub> diminuisce di 5 volte.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Una mano di massa efficace 0,50 kg arriva sul mattone a 10 m/s e si arresta in 5,0 ms. Calcola la forza media sulla mano. Quanto varrebbe se si arrestasse in 50 ms, come in una spinta lenta?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Quanto vale la variazione di quantità di moto?</summary><div>Δp = m (v<sub>f</sub> − v<sub>i</sub>) = 0,50 kg · (0 − 10 m/s) = −5,0 kg·m/s.</div></details>
+<details class="step"><summary>2. Quanto vale l’impulso?</summary><div>Per il teorema dell’impulso I = Δp = −5,0 kg·m/s = −5,0 N·s.</div></details>
+<details class="step"><summary>3. Le unità sono coerenti? Che cosa fai?</summary><div>No: i millisecondi vanno convertiti in secondi. Δt = 5,0 ms = 5,0 · 10<sup>−3</sup> s = 0,0050 s.</div></details>
+<details class="step"><summary>4. Quanto vale la forza media in 5,0 ms?</summary><div>F<sub>media</sub> = I / Δt = −5,0 N·s / 0,0050 s = <b>−1000 N</b>. Il segno meno dice che la forza sulla mano è opposta al moto. Sul mattone agisce una forza uguale e opposta, +1000 N (terzo principio).</div></details>
+<details class="step"><summary>5. E se l’arresto dura 50 ms?</summary><div>Δt = 50 ms = 0,050 s, quindi F<sub>media</sub> = −5,0 N·s / 0,050 s = <b>−100 N</b>.</div></details>
+<details class="step"><summary>6. Che relazione c’è tra tempo e forza?</summary><div>Δt è 10 volte maggiore e la forza 10 volte minore: a parità di impulso, F<sub>media</sub> è inversamente proporzionale a Δt.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Nella scena la forza è un impulso a semionda sinusoidale (picco circa 88 kN contro cruscotto, 18 kN con l’airbag) con area 1125 N·s: è un modello semplificato. L’airbag riduce la forza anche distribuendola su un’area maggiore, non solo allungando il tempo; il mattone si rompe anche perché la forza è concentrata in una zona piccola. Qui il confronto è volutamente sul solo tempo. Errori tipici: pensare che l’airbag riduca la variazione di quantità di moto, dimenticare il segno di Δp. Ponte con la scheda successiva: il sistema di corpi.</p></details>
+</main>
+<script>
+(()=>{
+const J=1125,P=[{n:'Cruscotto',T:.02,col:'--pot'},{n:'Airbag',T:.10,col:'--blue'}];P.forEach(o=>{o.Fm=J/o.T;o.Fx=Math.PI*J/(2*o.T)});
+const XM=.12,YM=100000,TE=.10,F='13px "Atkinson Hyperlegible",system-ui,sans-serif',FB='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif';
+const Fo=(o,t)=>t<=o.T?o.Fx*Math.sin(Math.PI*t/o.T):0,Jo=(o,t)=>{const tt=Math.min(t,o.T);return o.Fx*o.T/Math.PI*(1-Math.cos(Math.PI*tt/o.T))};
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),fmk=$('fmk'),res=$('res'),hint=$('hint');
+const groups=[...document.querySelectorAll('.choices')],reduce=matchMedia('(prefers-reduced-motion: reduce)'),ch={p:null,f:null};
+let tau=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',',');
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=310*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),t=tau*TE,gx0=56,gx1=W-14,gy0=196,gy1=24,X=s=>gx0+s/XM*(gx1-gx0),Y=f=>gy0-f/YM*(gy0-gy1);
+ctx.clearRect(0,0,W,310);ctx.font=F;ctx.strokeStyle=c('--muted');ctx.fillStyle=c('--muted');ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(gx0,gy1-8);ctx.lineTo(gx0,gy0);ctx.lineTo(gx1,gy0);ctx.stroke();
+ctx.textAlign='right';[0,50,100].forEach(k=>ctx.fillText(k+'',gx0-6,Y(k*1000)+4));ctx.textAlign='left';ctx.fillText('F (kN)',gx0+6,gy1-10);
+ctx.textAlign='center';[0,.05,.1].forEach(s=>ctx.fillText(fm(s,2),X(s),gy0+16));ctx.fillText('t (s)',(gx0+gx1)/2,gy0+32);
+P.forEach(o=>{const te=Math.min(t,o.T),col=c(o.col);
+ctx.beginPath();ctx.moveTo(X(0),Y(0));for(let i=0;i<=60;i++){const s=te*i/60;ctx.lineTo(X(s),Y(Fo(o,s)))}ctx.lineTo(X(te),Y(0));ctx.closePath();ctx.globalAlpha=.25;ctx.fillStyle=col;ctx.fill();ctx.globalAlpha=1;
+ctx.beginPath();for(let i=0;i<=60;i++){const s=te*i/60;ctx[i?'lineTo':'moveTo'](X(s),Y(Fo(o,s)))}ctx.strokeStyle=col;ctx.lineWidth=3;ctx.stroke();
+if(fmk.checked&&t>=o.T){ctx.save();ctx.setLineDash([6,4]);ctx.lineWidth=2;ctx.strokeRect(X(0),Y(o.Fm),X(o.T)-X(0),Y(0)-Y(o.Fm));ctx.restore()}});
+ctx.font=FB;ctx.fillStyle=c('--ink');if(t>=.006){ctx.textAlign='left';ctx.fillText('cruscotto',X(.02)+8,Y(P[0].Fx)+6)}if(t>=.04){ctx.textAlign='center';ctx.fillText('airbag',X(.05),Y(P[1].Fx)-10)}
+P.forEach((o,i)=>{const y=236+i*38;ctx.fillStyle=c(o.col);ctx.fillRect(10,y-10,10,10);ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.font=FB;ctx.fillText(o.n+': Δt = '+fm(o.T,2)+' s, F media = '+fm(o.Fm/1000,0)+' kN',26,y);ctx.font=F;ctx.fillText('impulso finora = '+fm(Jo(o,t),0)+' N·s',26,y+17)})}
+function finish(){running=false;go.textContent='Riguarda l’arresto';go.disabled=false;
+const okp=ch.p==='=',okf=ch.f==='m',v=$('verdict');v.className='verdict '+(okp&&okf?'ok':'no');
+v.innerHTML='<b>Variazione di quantità di moto: '+(okp?'previsione corretta.':'non era così.')+'</b> È uguale nei due casi (1125 kg·m/s). <b>Forza media: '+(okf?'previsione corretta.':'non era così.')+'</b> Con l’airbag è 11 kN, contro 56 kN: cinque volte minore.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||!ch.p||!ch.f)return;groups.forEach(g=>g.querySelectorAll('button').forEach(b=>b.disabled=true));tau=0;
+if(reduce.matches){tau=1;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{tau+=(n-last)/1000/(slow.checked?9:4);last=n;if(tau>=1){tau=1;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+groups.forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch[g.dataset.g]=b.dataset.v;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(ch.p&&ch.f){go.disabled=false;hint.textContent='Previsioni registrate. Ora guarda cosa succede.'}}));
+go.onclick=run;fmk.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

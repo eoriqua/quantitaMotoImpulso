@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mappa dei concetti: energia e quantità di moto</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#B8C4CE;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#A4B2BE;--line:#3A4B5A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#A4B2BE;--line:#3A4B5A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:62rem;margin:0 auto;padding:1.5rem 1.1rem 3rem}
+h1{font-size:clamp(1.8rem,5.5vw,2.6rem);line-height:1.1;margin:.3rem 0 .8rem;letter-spacing:-.015em}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+.lead{max-width:62ch;margin:0 0 .4rem}
+#wrap{margin-top:1.2rem}
+svg{display:block;width:100%;height:auto;font-family:inherit}
+.box{fill:var(--surface);stroke:var(--blue);stroke-width:2.5}
+.ctx{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.grp{fill:var(--blue-soft);stroke:var(--line);stroke-width:2}
+a.nd{cursor:pointer}
+a.nd:hover .box{fill:var(--blue-soft)}
+a.nd:focus-visible{outline:none}
+a.nd:focus-visible .box{stroke:var(--ink);stroke-width:4}
+.badge{fill:var(--blue)}.bn{fill:var(--on-blue);font-size:14px;font-weight:700}
+.seen .box{stroke:var(--ok)}.seen .badge{fill:var(--ok)}
+.t{font-size:16px;font-weight:700;fill:var(--ink)}.s{font-size:14px;fill:var(--muted)}
+.edge{stroke:var(--muted);stroke-width:2;fill:none}
+.el{font-size:14px;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:7px;stroke-linejoin:round}
+details{margin-top:1.6rem;color:var(--muted)}summary{cursor:pointer}
+details h2{font-size:1rem;margin:.8rem 0 0;color:var(--ink)}
+details ol{margin:.3rem 0 0;padding-left:1.3rem}details a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+<p class="meta">Fisica · liceo scientifico, opzione scienze applicate</p>
+<h1>Energia e quantità di moto: come si collegano i concetti</h1>
+<p class="lead">Segui le frecce: la parola su ogni freccia dice come sono legati due concetti. Clicca i riquadri blu numerati per aprire la scheda corrispondente. Gli urti, che collegano i due blocchi, saranno aggiunti a questa mappa.</p>
+<p class="meta" id="count"></p>
+<div id="wrap"></div>
+<details><summary>Versione a elenco</summary>
+<h2>Energia</h2><ol>
+<li><a href="scheda1.html">Energia cinetica</a></li>
+<li><a href="scheda2.html">Energia potenziale gravitazionale</a></li>
+<li><a href="scheda3.html">Energia potenziale elastica</a></li>
+<li><a href="scheda4.html">Conservazione dell’energia meccanica</a></li>
+<li><a href="scheda5.html">Quando l’energia meccanica non si conserva</a></li></ol>
+<h2>Quantità di moto</h2><ol>
+<li><a href="scheda6.html">Quantità di moto</a></li>
+<li><a href="scheda7.html">Impulso</a></li>
+<li><a href="scheda8.html">Sistema isolato</a></li>
+<li><a href="scheda9.html">Conservazione della quantità di moto</a></li></ol>
+</details>
+</main>
+<script>
+(()=>{
+const NS='http://www.w3.org/2000/svg',KEY='mappa-fisica-aperte',wrap=document.getElementById('wrap'),cnt=document.getElementById('count');
+const LINK={e1:'scheda1.html',e2:'scheda2.html',e3:'scheda3.html',e4:'scheda4.html',e5:'scheda5.html',q1:'scheda6.html',q2:'scheda7.html',q3:'scheda8.html',q4:'scheda9.html'};
+const C={em:{t:['Energia meccanica'],s:['Em = Ec + U'],k:'ctx'},u:{t:['Energia potenziale'],s:['L(peso) = −ΔU'],k:'grp'},
+ec:{t:['Energia cinetica'],s:['Ec = ½ m v²','L = ΔEc'],k:'l',id:'e1',n:1},ug:{t:['gravitazionale'],s:['U = m g h'],k:'l',id:'e2',n:2},ue:{t:['elastica'],s:['U = ½ k x²'],k:'l',id:'e3',n:3},
+cons:{t:['Conservazione dell’energia','meccanica'],s:['Ec + U = costante'],k:'l',id:'e4',n:4},att:{t:['Quando non si conserva'],s:['ΔEm = L(att) < 0','l’energia persa diventa termica'],k:'l',id:'e5',n:5},
+sp:{t:['Secondo principio'],s:['F = Δp / Δt'],k:'ctx'},q1:{t:['Quantità di moto'],s:['p = m v','resistenza al cambiamento del moto'],k:'l',id:'q1',n:1},
+q2:{t:['Impulso'],s:['I = F Δt = Δp','area sotto il grafico F-t'],k:'l',id:'q2',n:2},q3:{t:['Sistema isolato'],s:['le forze interne si cancellano','F(est) = 0'],k:'l',id:'q3',n:3},
+q4:{t:['Conservazione della','quantità di moto'],s:['p prima = p dopo'],k:'l',id:'q4',n:4}};
+const E={n:{em:[95,14,250,56],u:[10,110,205,250],ug:[22,170,181,70],ue:[22,260,181,70],ec:[230,135,200,96],cons:[60,420,320,84],att:[80,550,280,96]},
+e:[[[330,70],[330,135],'del moto'],[[112,70],[112,110],'della posizione'],[[330,231],[330,420],'si scambia con U'],[[112,360],[112,420],'si scambia con Ec'],[[220,504],[220,550],'se agisce l’attrito']]};
+const Q={n:{sp:[95,14,250,56],q1:[60,135,320,86],q2:[60,270,320,86],q3:[60,405,320,86],q4:[60,550,320,90]},
+e:[[[220,70],[220,135],'definisce'],[[220,221],[220,270],'si modifica con'],[[220,356],[220,405],'per un sistema di corpi'],[[220,491],[220,550],'se è isolato']]};
+const WIDE={W:910,H:670,B:[[E,0,0],[Q,470,0]],X:[[[430,183],[530,178],'Ec = p²/(2m)']]},NARROW={W:440,H:1360,B:[[E,0,0],[Q,0,690]],X:[]};
+let seen={};try{seen=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){seen={}}
+for(let i=1;i<=5;i++)if(seen[i])seen['e'+i]=1;
+const el=(n,a,t)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e};
+function lines(g,arr,x,y0,anc){arr.forEach(([c,t],i)=>g.appendChild(el('text',{x,y:y0+i*20,class:c,'text-anchor':anc},t)))}
+function build(){
+const L=wrap.clientWidth>=640?WIDE:NARROW,svg=el('svg',{viewBox:'0 0 '+L.W+' '+L.H,role:'group','aria-label':'Mappa concettuale di energia e quantità di moto'});
+const d=el('defs',{}),mk=el('marker',{id:'ah',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:8,markerHeight:8,orient:'auto'});mk.appendChild(el('path',{d:'M0 0L10 5L0 10z',style:'fill:var(--muted)'}));d.appendChild(mk);svg.appendChild(d);
+const edges=[...L.X],nodes=[];
+L.B.forEach(([b,ox,oy])=>{b.e.forEach(([a,c,t])=>edges.push([[a[0]+ox,a[1]+oy],[c[0]+ox,c[1]+oy],t]));for(const id in b.n){const [x,y,w,h]=b.n[id];nodes.push([id,x+ox,y+oy,w,h])}});
+edges.forEach(([a,b,t])=>{svg.appendChild(el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],class:'edge','marker-end':'url(#ah)'}));svg.appendChild(el('text',{x:(a[0]+b[0])/2,y:(a[1]+b[1])/2,class:'el','text-anchor':'middle','dominant-baseline':'central'},t))});
+nodes.filter(n=>C[n[0]].k!=='l').forEach(([id,x,y,w,h])=>{const c=C[id],g=el('g',{});g.appendChild(el('rect',{x,y,width:w,height:h,rx:14,class:c.k==='grp'?'grp':'ctx'}));
+const ls=[...c.t.map(t=>['t',t]),...c.s.map(t=>['s',t])];lines(g,ls,x+w/2,c.k==='grp'?y+26:y+(h-ls.length*20)/2+15,'middle');svg.appendChild(g)});
+nodes.filter(n=>C[n[0]].k==='l').forEach(([id,x,y,w,h])=>{const c=C[id],a=el('a',{href:LINK[c.id],class:'nd','data-id':c.id,'data-n':c.n,'aria-label':(c.id[0]==='e'?'Energia':'Quantità di moto')+', scheda '+c.n+': '+c.t.join(' ')});
+a.appendChild(el('rect',{x,y,width:w,height:h,rx:14,class:'box'}));a.appendChild(el('circle',{cx:x+24,cy:y+h/2,r:14,class:'badge'}));a.appendChild(el('text',{x:x+24,y:y+h/2+5,class:'bn','text-anchor':'middle'},String(c.n)));
+const ls=[...c.t.map(t=>['t',t]),...c.s.map(t=>['s',t])];lines(a,ls,x+48,y+(h-ls.length*20)/2+15,'start');
+a.addEventListener('click',()=>{seen[c.id]=1;try{localStorage.setItem(KEY,JSON.stringify(seen))}catch(e){}paint()});svg.appendChild(a)});
+wrap.replaceChildren(svg);paint()}
+function paint(){wrap.querySelectorAll('a.nd').forEach(a=>{const s=!!seen[a.dataset.id];a.classList.toggle('seen',s);a.querySelector('.bn').textContent=s?'✓':a.dataset.n});
+cnt.textContent='Schede aperte: '+Object.keys(seen).filter(k=>LINK[k]).length+' su 9'}
+let w0=wrap.clientWidth>=640;build();addEventListener('resize',()=>{const w=wrap.clientWidth>=640;if(w!==w0){w0=w;build()}});
+})();
+</script>
+</body>
+</html>

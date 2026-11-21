@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Energia cinetica: perché il doppio della velocità vuol dire quattro volte lo spazio?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;--carA:#6B7C8A;--carB:#1F5FD0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--carA:#8C9CAA;--carB:#6FA0FF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;--carA:#8C9CAA;--carB:#6FA0FF;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.55rem,5.2vw,2.25rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.8rem 0}
+.choices button{min-width:5.5rem;font-size:1.15rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%;height:250px}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.15rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Energia · scheda 1 di 5</p>
+<h1>Frenare da 100 km/h richiede uno spazio quattro volte maggiore che da 50 km/h, non il doppio. Perché?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Due auto identiche frenano con la stessa forza costante. La prima parte da 50 km/h e si ferma dopo una distanza d. Quanto spazio serve alla seconda, che parte da 100 km/h?</p>
+<div class="choices" role="group" aria-label="La tua previsione">
+<button data-v="2" aria-pressed="false">2 d</button>
+<button data-v="4" aria-pressed="false">4 d</button>
+<button data-v="8" aria-pressed="false">8 d</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Due auto frenano con la stessa forza: quella a 100 km/h si ferma dopo quattro volte lo spazio di quella a 50 km/h"></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Avvia la frenata</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="en" checked> Mostra l’energia cinetica</label>
+</div>
+</div>
+<p class="meta" id="hint">Scegli una previsione per sbloccare la scena. Le barre mostrano l’energia cinetica in percentuale di quella dell’auto a 100 km/h.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Il tempo non basta a spiegarlo.</b> L’auto veloce impiega il doppio del tempo a fermarsi (4,0 s contro 2,0 s), ma percorre quattro volte lo spazio: parte più veloce e rallenta per più tempo.</li>
+<li><b>Guarda le barre.</b> L’energia cinetica non scende col tempo in modo semplice: scende in proporzione allo spazio percorso, fino a zero nel punto di arresto.</li>
+<li><b>Il motivo.</b> Raddoppiare v moltiplica l’energia cinetica per 2² = 4, perché E<sub>c</sub> = ½ m v². Il teorema dell’energia cinetica collega questa energia allo spazio di frenata:</li>
+</ul>
+<div class="formula deriv"><p>Teorema dell’energia cinetica: <b>L = ΔE<sub>c</sub> = E<sub>c,fin</sub> − E<sub>c,in</sub></b></p><ol><li>L’auto si ferma: E<sub>c,fin</sub> = 0, quindi ΔE<sub>c</sub> = −½ m v².</li><li>La forza frenante F è opposta allo spostamento d: L = −F · d.</li><li>Uguaglio lavoro e variazione di energia: −F · d = −½ m v².</li><li>Ricavo lo spazio: <b>d = m v² / (2F)</b>.</li><li>Con m e F costanti, d è proporzionale a v²: se v raddoppia, d quadruplica.</li></ol></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Un’auto di massa 1200 kg viaggia a 90 km/h. I freni esercitano una forza costante di 6000 N. Quanto spazio serve per fermarsi? E se viaggiasse a 45 km/h?</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Le unità sono coerenti? Che cosa fai?</summary><div>No: i km/h vanno convertiti in m/s dividendo per 3,6. v = 90 / 3,6 = 25 m/s.</div></details>
+<details class="step"><summary>2. Quanta energia cinetica devono eliminare i freni?</summary><div>E<sub>c</sub> = ½ m v² = ½ · 1200 · 25² = 375 000 J = 375 kJ.</div></details>
+<details class="step"><summary>3. Quanto vale la variazione di energia cinetica fino all’arresto?</summary><div>A fine frenata l’auto è ferma, quindi E<sub>c,fin</sub> = 0 e ΔE<sub>c</sub> = 0 − 375 000 J = −375 000 J.</div></details>
+<details class="step"><summary>4. Quanto vale il lavoro della forza frenante, e con quale segno?</summary><div>F è opposta allo spostamento, quindi il lavoro è negativo: L = −F · d = −6000 · d.</div></details>
+<details class="step"><summary>5. Come usi il teorema dell’energia cinetica per ricavare d?</summary><div>L = ΔE<sub>c</sub>, cioè −6000 · d = −375 000. I segni meno si semplificano: d = 375 000 / 6000 = <b>62,5 m</b>.</div></details>
+<details class="step"><summary>6. Come puoi verificare il risultato con la cinematica?</summary><div>a = F / m = 6000 / 1200 = 5,0 m/s². Da v² = 2 a d: d = 25² / (2 · 5,0) = 62,5 m. Coincide.</div></details>
+<details class="step"><summary>7. E a 45 km/h, senza rifare tutti i conti?</summary><div>La velocità si dimezza, quindi E<sub>c</sub> diventa ¼ e anche lo spazio: d = 62,5 / 4 ≈ <b>15,6 m</b>.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>Nella scena a = 7,0 m/s² (asfalto asciutto, ordine di grandezza), tempo di reazione escluso. Errori tipici: rispondere «il doppio» per proporzionalità diretta; confondere spazio e tempo di frenata. I passi 3-5 del problema applicano il teorema dell’energia cinetica con attenzione ai segni; il passo 6 lo verifica con la cinematica.</p></details>
+</main>
+<script>
+(()=>{
+const a=7,vA=50/3.6,vB=100/3.6,dA=vA*vA/(2*a),dB=vB*vB/(2*a),tA=vA/a,tB=vB/a,TEND=tB+.5;
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),en=$('en'),res=$('res'),hint=$('hint');
+const btns=[...document.querySelectorAll('.choices button')],reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let choice=null,t=0,running=false,locked=false;
+const f=n=>n.toFixed(1).replace('.',',');
+const st=(v,tt)=>tt<v/a?{x:v*tt-.5*a*tt*tt,s:v-a*tt}:{x:v*v/(2*a),s:0};
+function size(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=250*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim();
+ctx.clearRect(0,0,W,250);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif';
+const sc=(W-20)/64.5,x0=4.5*sc+10,L=[{y:34,v:vA,col:c('--carA'),lab:'50 km/h'},{y:92,v:vB,col:c('--carB'),lab:'100 km/h'}];
+ctx.strokeStyle=c('--muted');ctx.fillStyle=c('--muted');ctx.lineWidth=1;ctx.textAlign='center';
+ctx.beginPath();ctx.moveTo(x0,134);ctx.lineTo(x0+60*sc,134);
+for(let m=0;m<=60;m+=10){const x=x0+m*sc;ctx.moveTo(x,134);ctx.lineTo(x,139);ctx.fillText(m+' m',x,153)}
+ctx.stroke();
+L.forEach(l=>{ctx.fillStyle=c('--road');ctx.fillRect(0,l.y-6,W,34)});
+if(t>=tA){const x=x0+dA*sc;ctx.setLineDash([4,4]);ctx.strokeStyle=c('--muted');ctx.beginPath();ctx.moveTo(x,24);ctx.lineTo(x,134);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText('d = '+f(dA)+' m',x+5,20)}
+if(t>=tB){const x=x0+dB*sc;ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(f(dB)+' m = 4 d',x-4,78)}
+L.forEach(l=>{const s=st(l.v,t),xf=x0+s.x*sc,len=4.5*sc;l.s=s.s;
+ctx.fillStyle=l.col;ctx.beginPath();ctx.roundRect(xf-len,l.y,len,22,5);ctx.fill();
+ctx.fillStyle=c('--surface');ctx.fillRect(xf-len*.33,l.y+4,len*.18,14);
+ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(l.lab,10,l.y-10)});
+if(en.checked)L.forEach((l,i)=>{const y=172+i*30,fr=(l.s/vB)**2,w=W-130;
+ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText(l.lab,10,y+12);
+ctx.fillStyle=c('--road');ctx.fillRect(80,y,w,16);ctx.fillStyle=l.col;ctx.fillRect(80,y,w*fr,16);
+ctx.fillStyle=c('--ink');ctx.textAlign='right';ctx.fillText(Math.round(fr*100)+' %',W-10,y+12)})}
+function finish(){running=false;go.textContent='Riguarda la scena';go.disabled=false;
+const v=$('verdict'),ok=choice===4;v.className='verdict '+(ok?'ok':'no');
+v.innerHTML=(ok?'<b>Previsione corretta: 4 d.</b> ':'Avevi previsto '+choice+' d. <b>Non è così:</b> ')+'L’auto a 100 km/h si è fermata dopo '+f(dB)+' m, l’altra dopo '+f(dA)+' m.';
+if(res.hidden){res.hidden=false;res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||choice===null)return;locked=true;btns.forEach(b=>b.disabled=true);t=0;
+if(reduce.matches){t=TEND;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{t+=(n-last)/1000*(slow.checked?.25:1);last=n;if(t>=TEND){t=TEND;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+btns.forEach(b=>b.onclick=()=>{if(locked)return;choice=+b.dataset.v;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));go.disabled=false;hint.textContent='Previsione registrata: '+choice+' d. Ora guarda cosa succede.'});
+go.onclick=run;en.onchange=draw;addEventListener('resize',size);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>

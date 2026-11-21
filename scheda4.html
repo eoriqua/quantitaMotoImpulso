@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conservazione dell’energia meccanica: due scivoli, stessa altezza</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15202B;--muted:#55646F;--line:#D3DCE3;--road:#E6ECF1;--blue:#1F5FD0;--on-blue:#fff;--blue-soft:#E3ECFB;--ok:#17794D;--ok-soft:#DFF3E9;--warn:#9A4A08;--warn-soft:#FBEBD9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1720;--surface:#17222D;--ink:#E8EEF3;--muted:#9AA9B5;--line:#2B3A47;--road:#1F2D3A;--blue:#6FA0FF;--on-blue:#0F1720;--blue-soft:#1B2B47;--ok:#5BD49B;--ok-soft:#14352A;--warn:#F0A55E;--warn-soft:#3A2814;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.55 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:1.25rem 1.1rem 3rem}
+h1{font-size:clamp(1.5rem,5vw,2.15rem);line-height:1.17;margin:.4rem 0 1.6rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.2rem 0 .5rem}
+p{margin:.5rem 0;max-width:62ch}
+.meta{color:var(--muted);font-size:.95rem;margin:0}
+button,summary{font:inherit}
+button{border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue);font-weight:700}
+button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--ink);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.q{font-weight:700;margin:1.1rem 0 0}
+:root{--pot:#B45F06}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pot:#F0A55E}}:root[data-theme="dark"]{--pot:#F0A55E}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.choices button{min-width:7rem}
+.scene{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.6rem}
+canvas{display:block;width:100%}
+.ctrl{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}
+.ctrl label{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.ctrl input{width:1.1rem;height:1.1rem}
+.verdict{padding:.8rem 1rem;border-radius:8px;border-left:5px solid}
+.verdict.ok{background:var(--ok-soft);border-color:var(--ok)}
+.verdict.no{background:var(--warn-soft);border-color:var(--warn)}
+.formula{background:var(--blue-soft);border-radius:8px;padding:.9rem 1rem;margin:1rem 0;font-size:1.1rem}
+.deriv ol{margin:.5rem 0 0;padding-left:1.3rem}.deriv li{margin:.4rem 0}.deriv p{margin:0}
+ul.find{padding-left:1.2rem;max-width:62ch}ul.find li{margin:.5rem 0}
+.problem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0}
+details.step{border-left:4px solid var(--line);margin:.7rem 0;padding:.1rem 0 .1rem .9rem}
+details.step[open]{border-color:var(--blue)}
+details.step summary{cursor:pointer;font-weight:700;padding:.3rem 0}
+details.step div{padding:.2rem 0 .5rem}
+details.note{margin-top:2.4rem;color:var(--muted);font-size:.97rem}
+details.note summary{cursor:pointer}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.back{display:inline-block;margin:0 0 .5rem;padding:.4rem 0;color:var(--blue);font-weight:700;text-decoration:none}.back:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Torna alla mappa</a>
+<p class="meta">Energia · scheda 4 di 5</p>
+<h1>Due scivoli con la stessa altezza di partenza e di arrivo: le due palline arrivano con la stessa velocità? E insieme?</h1>
+
+<h2>Prima di guardare, prevedi</h2>
+<p>Due palline identiche, da 1 kg ciascuna, partono insieme da ferme, su due piste senza attrito. La A è un piano inclinato dritto. La B scende ripida, passa più in basso del punto d’arrivo e poi risale dolcemente fino alla stessa quota finale.</p>
+<p class="q">Quale arriva al traguardo con più velocità?</p>
+<div class="choices" role="group" aria-label="Previsione sulla velocità" data-g="v">
+<button data-v="A" aria-pressed="false">La A</button><button data-v="B" aria-pressed="false">La B</button><button data-v="=" aria-pressed="false">Stessa velocità</button>
+</div>
+<p class="q">Quale arriva prima?</p>
+<div class="choices" role="group" aria-label="Previsione sull’arrivo" data-g="t">
+<button data-v="A" aria-pressed="false">La A</button><button data-v="B" aria-pressed="false">La B</button><button data-v="=" aria-pressed="false">Insieme</button>
+</div>
+
+<h2>Ora verifica</h2>
+<div class="scene">
+<canvas id="scena" role="img" aria-label="Due piste senza attrito: la A dritta, la B che scende e risale. Due palline partono insieme. Sotto, due barre mostrano energia cinetica e potenziale, la cui somma resta costante."></canvas>
+<div class="ctrl">
+<button id="go" class="primary" disabled>Lascia partire le palline</button>
+<label><input type="checkbox" id="slow"> Rallenta</label>
+<label><input type="checkbox" id="eck" checked> Mostra energia cinetica</label>
+<label><input type="checkbox" id="epk" checked> Mostra energia potenziale</label>
+<label><input type="checkbox" id="vmk" checked> Mostra velocità media</label>
+</div>
+</div>
+<p class="meta" id="hint">Fai tutte e due le previsioni per sbloccare la scena. La barra intera è l’energia meccanica (zero dell’energia potenziale nel punto più basso della pista B). Puoi mostrare o nascondere energie e velocità media (strada percorsa divisa per il tempo trascorso) con le caselle accanto al pulsante.</p>
+
+<section id="res" hidden aria-live="polite">
+<h2>Cosa hai visto</h2>
+<p id="verdict" class="verdict"></p>
+<ul class="find">
+<li><b>Stessa velocità finale.</b> Entrambe scendono di 1,0 m, quindi arrivano a circa 4,4 m/s: la velocità non dipende dal percorso.</li>
+<li><b>Ma non arrivano insieme.</b> La B arriva dopo <span id="tB"></span> s, la A dopo <span id="tA"></span> s, anche se la B fa più strada. Il motivo è spiegato qui sotto.</li>
+<li><b>Guarda le barre.</b> L’energia cinetica cresce solo a spese di quella potenziale, e la somma non cambia mai.</li>
+<li><b>Il motivo.</b> Si ottiene mettendo insieme i due teoremi delle schede precedenti:</li>
+</ul>
+<div class="formula deriv"><p>La pallina scende da un punto i a un punto f lungo il binario, senza attrito.</p><ol>
+<li>Teorema dell’energia cinetica: L<sub>tot</sub> = ΔE<sub>c</sub>.</li>
+<li>Agiscono due forze. La forza peso ha L = −ΔU. La reazione del binario è sempre perpendicolare allo spostamento, quindi L = 0.</li>
+<li>Allora −ΔU = ΔE<sub>c</sub>, cioè ΔE<sub>c</sub> + ΔU = 0.</li>
+<li>Quindi <b>E<sub>c,i</sub> + U<sub>i</sub> = E<sub>c,f</sub> + U<sub>f</sub></b>: l’energia meccanica si conserva.</li>
+<li>Partendo da fermo da un dislivello h: ½ m v² = m g h, quindi v = √(2 g h). Non compaiono né la massa né la forma del percorso.</li></ol></div>
+
+<h2>Perché la B arriva prima, anche se fa più strada?</h2>
+<p>La conservazione dell’energia fissa la velocità in ogni punto. Il tempo dipende però anche da quanta strada si percorre.</p>
+<div class="formula deriv"><ol>
+<li>In ogni punto v = √(2 g Δh): la velocità dipende solo da quanto si è scesi, non dalla pendenza.</li>
+<li>Il tempo è t = s / v<sub>medio</sub>: contano sia la strada percorsa sia la velocità media.</li>
+<li>La B percorre più strada (<span id="sB"></span> m contro <span id="sA"></span> m), ma ha una velocità media molto maggiore (<span id="mB"></span> m/s contro <span id="mA"></span> m/s): il rapporto s / v<sub>medio</sub> è minore, quindi arriva prima.</li>
+<li>La velocità media della B è maggiore perché la B scende più in fretta all’inizio e, per il punto 1, raggiunge presto velocità alte.</li></ol></div>
+<div class="scene"><canvas id="gv" style="height:210px" role="img" aria-label="Grafico velocità-tempo delle due palline: stessa velocità finale, ma la curva della B sale prima."></canvas></div>
+
+<h2>Un problema tipico, passo per passo</h2>
+<div class="problem">Un carrello di massa 2,0 kg parte da fermo dalla sommità di una pista senza attrito, a 5,0 m di altezza dal suolo. Calcola la sua velocità quando si trova a 2,0 m dal suolo e quando arriva a terra.</div>
+<p>Per ogni passo, prova prima a rispondere sul quaderno, poi apri.</p>
+<details class="step"><summary>1. Quanto vale l’energia meccanica iniziale (zero sul suolo)?</summary><div>Il carrello è fermo: E<sub>c</sub> = 0. Quindi E<sub>m</sub> = U = m g h = 2,0 · 9,8 · 5,0 = 98 J.</div></details>
+<details class="step"><summary>2. Perché puoi dire che E<sub>m</sub> resta 98 J durante la discesa?</summary><div>Non c’è attrito, e la reazione della pista non compie lavoro: l’unica forza che lavora è il peso, che è conservativa.</div></details>
+<details class="step"><summary>3. Quanta energia cinetica ha a 2,0 m di altezza?</summary><div>U = 2,0 · 9,8 · 2,0 = 39,2 J. Da E<sub>m</sub> = E<sub>c</sub> + U: E<sub>c</sub> = 98 − 39,2 = 58,8 J.</div></details>
+<details class="step"><summary>4. Da E<sub>c</sub> ricava la velocità</summary><div>½ m v² = 58,8 → v = √(2 · 58,8 / 2,0) = √58,8 ≈ <b>7,7 m/s</b>.</div></details>
+<details class="step"><summary>5. E quando arriva a terra?</summary><div>U = 0, quindi E<sub>c</sub> = 98 J e v = √(2 · 98 / 2,0) = √98 ≈ <b>9,9 m/s</b>.</div></details>
+<details class="step"><summary>6. Come verifichi senza usare la massa? E se fosse 5,0 kg?</summary><div>Il dislivello fino a 2,0 m è 3,0 m: v = √(2 · 9,8 · 3,0) = √58,8 ≈ 7,7 m/s. La massa si semplifica, quindi con 5,0 kg le velocità sarebbero le stesse.</div></details>
+</section>
+
+<details class="note"><summary>Note per il docente</summary>
+<p>La scena è una pallina vincolata alla pista (senza attrito), con i tempi calcolati dalla conservazione dell’energia. Se la pallina rotolasse, parte dell’energia andrebbe in rotazione. Lo zero di U è nel punto più basso della pista B e i valori in joule si riferiscono a una massa di 1 kg. Errori tipici: «chi fa più strada arriva dopo», «la velocità dipende dalla pendenza», «la reazione del binario compie lavoro». Ponte con la scheda 5: cosa cambierebbe se ci fosse attrito.</p></details>
+</main>
+<script>
+(()=>{
+const g=9.8,L=3,D=.6,N=600;
+function track(fn){const xs=[],ys=[],v=[],T=[0];for(let i=0;i<=N;i++){const x=L*i/N;xs.push(x);ys.push(fn(x));v.push(Math.sqrt(Math.max(0,2*g*(1-ys[i]))))}
+for(let i=1;i<=N;i++)T.push(T[i-1]+2*Math.hypot(xs[i]-xs[i-1],ys[i]-ys[i-1])/(v[i-1]+v[i]));const Sc=[0];for(let i=1;i<=N;i++)Sc.push(Sc[i-1]+Math.hypot(xs[i]-xs[i-1],ys[i]-ys[i-1]));return{xs,ys,v,T,Sc,end:T[N],s:Sc[N]}}
+const TA=track(x=>1-x/L),TB=track(x=>1-x/L-D*Math.sin(Math.PI*x/L)),ref=Math.min(...TB.ys),TMAX=Math.max(TA.end,TB.end)+.3;
+function at(tr,t){if(t>=tr.end)return{x:L,y:tr.ys[N],v:tr.v[N],s:tr.s};let lo=0,hi=N;while(hi-lo>1){const m=(lo+hi)>>1;tr.T[m]<=t?lo=m:hi=m}
+const f=(t-tr.T[lo])/(tr.T[hi]-tr.T[lo]||1),l=(a,b)=>a+f*(b-a);return{x:l(tr.xs[lo],tr.xs[hi]),y:l(tr.ys[lo],tr.ys[hi]),v:l(tr.v[lo],tr.v[hi]),s:l(tr.Sc[lo],tr.Sc[hi])}}
+const $=id=>document.getElementById(id),cv=$('scena'),ctx=cv.getContext('2d'),go=$('go'),slow=$('slow'),eck=$('eck'),epk=$('epk'),vmk=$('vmk'),res=$('res'),hint=$('hint');
+const groups=[...document.querySelectorAll('.choices')],reduce=matchMedia('(prefers-reduced-motion: reduce)'),ch={v:null,t:null};
+let t=0,running=false;
+const fm=(n,d)=>n.toFixed(d).replace('.',',');
+function size(){const d=devicePixelRatio||1,W=cv.clientWidth,s=(W-40)/L,h=Math.round(10+(1-ref)*s+30+2*44+14);cv.style.height=h+'px';cv.width=W*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function draw(){
+const W=cv.clientWidth,s=(W-40)/L,cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),px=x=>20+x*s,py=y=>10+(1-y)*s,Em=g*(1-ref);
+ctx.clearRect(0,0,cv.clientHeight,W);ctx.clearRect(0,0,W,cv.clientHeight);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif';
+ctx.fillStyle=c('--road');ctx.fillRect(0,py(ref)+8,W,0);
+ctx.setLineDash([4,4]);ctx.strokeStyle=c('--muted');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px(0),py(1));ctx.lineTo(px(L),py(1));ctx.moveTo(px(L),py(1));ctx.lineTo(px(L),py(ref)+8);ctx.stroke();ctx.setLineDash([]);
+ctx.fillStyle=c('--muted');ctx.textAlign='right';ctx.fillText('traguardo',px(L)-4,py(1)+14);
+const T=[{tr:TA,n:'A',col:c('--muted')},{tr:TB,n:'B',col:c('--blue')}];
+T.forEach(o=>{ctx.strokeStyle=o.col;ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=N;i+=6)ctx[i?'lineTo':'moveTo'](px(o.tr.xs[i]),py(o.tr.ys[i]));ctx.stroke()});
+const yb=py(ref)+30;ctx.textAlign='left';
+if(eck.checked){ctx.fillStyle=c('--blue');ctx.fillRect(10,yb-16,10,10);ctx.fillStyle=c('--ink');ctx.fillText('energia cinetica',24,yb-7)}
+if(epk.checked){ctx.fillStyle=c('--pot');ctx.fillRect(140,yb-16,10,10);ctx.fillStyle=c('--ink');ctx.fillText('energia potenziale',154,yb-7)}ctx.textAlign='right';ctx.fillStyle=c('--ink');ctx.fillText('Em = '+fm(Em,1)+' J',W-10,yb-7);ctx.textAlign='left';
+T.forEach((o,i)=>{const p=at(o.tr,t),y=yb+4+i*44,bw=W-130,ecJ=.5*p.v*p.v,uJ=Math.max(0,Em-ecJ),ec=Math.min(1,ecJ/Em);
+ctx.fillStyle=c('--ink');ctx.textAlign='left';ctx.fillText('Pallina '+o.n,10,y+12);ctx.fillText('v = '+fm(p.v,1)+' m/s',10,y+27);if(vmk.checked){ctx.font='bold 13px "Atkinson Hyperlegible",system-ui,sans-serif';ctx.fillText('media '+fm(t>0?p.s/Math.min(t,o.tr.end):0,1)+' m/s',10,y+42);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif'}
+ctx.save();ctx.translate(0,8);ctx.fillStyle=c('--road');ctx.fillRect(120,y,bw,24);if(eck.checked){ctx.fillStyle=c('--blue');ctx.fillRect(120,y,bw*ec,24)}if(epk.checked){ctx.fillStyle=c('--pot');ctx.fillRect(120+bw*ec,y,bw*(1-ec),24)}ctx.font='bold 12px system-ui,sans-serif';ctx.fillStyle=c('--on-blue');ctx.textAlign='left';if(eck.checked&&bw*ec>56)ctx.fillText(fm(ecJ,1)+' J',126,y+16);ctx.textAlign='right';if(epk.checked&&bw*(1-ec)>56)ctx.fillText(fm(uJ,1)+' J',120+bw-6,y+16);ctx.textAlign='left';ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif';
+ctx.strokeStyle=c('--ink');ctx.lineWidth=1;ctx.strokeRect(120,y,bw,24);ctx.restore()});
+T.forEach(o=>{const p=at(o.tr,t);ctx.fillStyle=o.col;ctx.beginPath();ctx.arc(px(p.x),py(p.y)-9,9,0,7);ctx.fill();ctx.fillStyle=c('--surface');ctx.textAlign='center';ctx.font='bold 11px system-ui,sans-serif';ctx.fillText(o.n,px(p.x),py(p.y)-5);ctx.font='13px "Atkinson Hyperlegible",system-ui,sans-serif'})}
+function draw2(){const g2=$('gv');if(!g2||!g2.clientWidth)return;const d=devicePixelRatio||1,W=g2.clientWidth,H=210,x=g2.getContext('2d');g2.width=W*d;g2.height=H*d;x.setTransform(d,0,0,d,0,0);
+const cs=getComputedStyle(document.documentElement),c=n=>cs.getPropertyValue(n).trim(),x0=44,x1=W-14,y0=H-34,y1=16,Tm=Math.max(TA.end,TB.end)*1.05,Vm=5,X=tt=>x0+tt/Tm*(x1-x0),Y=v=>y0-v/Vm*(y0-y1);
+x.font='12px "Atkinson Hyperlegible",system-ui,sans-serif';x.strokeStyle=c('--muted');x.fillStyle=c('--muted');x.lineWidth=1;x.beginPath();x.moveTo(x0,y1-4);x.lineTo(x0,y0);x.lineTo(x1,y0);x.stroke();
+x.textAlign='center';[0,.5,1].forEach(v=>x.fillText(fm(v,1),X(v),y0+15));x.fillText('t (s)',(x0+x1)/2,y0+30);
+x.textAlign='right';[0,2,4].forEach(v=>x.fillText(v+'',x0-6,Y(v)+4));x.textAlign='left';x.fillText('v (m/s)',x0+6,y1-3);
+const vf=TA.v[N];x.save();x.setLineDash([2,3]);x.strokeStyle=c('--ink');x.lineWidth=1.5;x.beginPath();x.moveTo(x0,Y(vf));x.lineTo(x1,Y(vf));x.stroke();x.restore();x.fillStyle=c('--ink');x.textAlign='left';x.fillText('v finale = '+fm(vf,1)+' m/s (uguale)',x0+8,Y(vf)-5);
+[[TB,c('--blue'),'B'],[TA,c('--muted'),'A']].forEach(([tr,col,n])=>{
+x.beginPath();for(let i=0;i<=N;i+=4)x[i?'lineTo':'moveTo'](X(tr.T[i]),Y(tr.v[i]));x.strokeStyle=col;x.lineWidth=3;x.stroke();
+
+x.fillStyle=c('--ink');x.textAlign='right';x.fillText(n+' arriva',X(tr.end)-4,y0-8)})}
+function finish(){running=false;go.textContent='Riguarda la discesa';go.disabled=false;
+$('tA').textContent=fm(TA.end,2);$('tB').textContent=fm(TB.end,2);
+const sp=tr=>{let s=0;for(let i=1;i<=N;i++)s+=Math.hypot(tr.xs[i]-tr.xs[i-1],tr.ys[i]-tr.ys[i-1]);return s};
+$('sA').textContent=fm(sp(TA),1);$('sB').textContent=fm(sp(TB),1);$('mA').textContent=fm(sp(TA)/TA.end,1);$('mB').textContent=fm(sp(TB)/TB.end,1);
+const first=TB.end<TA.end?'B':'A',okv=ch.v==='=',okt=ch.t===first,v=$('verdict');
+v.className='verdict '+(okv&&okt?'ok':'no');
+v.innerHTML='<b>Velocità: '+(okv?'previsione corretta.':'non era così.')+'</b> Arrivano entrambe a '+fm(TA.v[N],1)+' m/s. <b>Arrivo: '+(okt?'previsione corretta.':'non era così.')+'</b> Vince la '+first+' ('+fm(Math.min(TA.end,TB.end),2)+' s contro '+fm(Math.max(TA.end,TB.end),2)+' s).';
+if(res.hidden){res.hidden=false;draw2();res.scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'nearest'})}}
+function run(){if(running||!ch.v||!ch.t)return;groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.disabled=true));t=0;
+if(reduce.matches){t=TMAX;draw();finish();return}
+running=true;go.disabled=true;let last=performance.now();
+const step=n=>{t+=(n-last)/1000*(slow.checked?.25:.6);last=n;if(t>=TMAX){t=TMAX;draw();finish();return}draw();requestAnimationFrame(step)};
+requestAnimationFrame(step)}
+groups.forEach(gr=>gr.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch[gr.dataset.g]=b.dataset.v;gr.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));if(ch.v&&ch.t){go.disabled=false;hint.textContent='Previsioni registrate. Ora guarda cosa succede.'}}));
+go.onclick=run;eck.onchange=epk.onchange=vmk.onchange=draw;addEventListener('resize',()=>{size();draw2()});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{draw();draw2()});
+if(document.fonts)document.fonts.ready.then(draw);
+size();
+})();
+</script>
+</body>
+</html>
